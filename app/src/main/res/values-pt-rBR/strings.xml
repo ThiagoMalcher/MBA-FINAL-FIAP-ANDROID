@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">MBA FIAP ANDROID</string>
+    <string name="app_login">APLICAÇÃO ANDROID FIAP</string>
+    <string name="app_username">Nome do usuário</string>
+    <string name="app_password">Senha</string>
+    <string name="btn_login">Entrar</string>
+    <string name="app_forgot">Esqueceu a senha?</string>
+    <string name="app_account">Não tem conta?</string>
+    <string name="app_new_account">Registre-se</string>
+</resources>

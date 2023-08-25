@@ -2,5 +2,9 @@
     <string name="app_name" translatable="false">MBA FIAP ANDROID</string>
     <string name="app_login">ANDROID APPLICATION FIAP</string>
     <string name="app_username">Username</string>
-
+    <string name="app_password">Password</string>
+    <string name="btn_login">Login</string>
+    <string name="app_forgot">Forgot Password?</string>
+    <string name="app_account">Do you have account?</string>
+    <string name="app_new_account">Create a new account</string>
 </resources>
