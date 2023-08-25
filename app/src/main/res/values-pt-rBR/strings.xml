@@ -2,10 +2,17 @@
 <resources>
     <string name="app_name" translatable="false">MBA FIAP ANDROID</string>
     <string name="app_login">APLICAÇÃO ANDROID FIAP</string>
-    <string name="app_username">Nome do usuário</string>
+    <string name="app_email">E-mail</string>
     <string name="app_password">Senha</string>
+    <string name="app_username">Nome Usuário</string>
     <string name="btn_login">Entrar</string>
+    <string name="btn_register">Register</string>
     <string name="app_forgot">Esqueceu a senha?</string>
     <string name="app_account">Não tem conta?</string>
     <string name="app_new_account">Registre-se</string>
+    <string name="msg_firebase">Erro ao registrar o perfil do usuário.</string>
+    <string name="msg_firebase_register_successfully">Usuário registrado com sucesso.</string>
+    <string name="msg_firebase_register_failure">Falha ao cadastrar o usuário.</string>
+    <string name="msg_fields">Preencha todos os campos.</string>
+    <string name="msg_fields_email">E-mail não é valido.</string>
 </resources>
