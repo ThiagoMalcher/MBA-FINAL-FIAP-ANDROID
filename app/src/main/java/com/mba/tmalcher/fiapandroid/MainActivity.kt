@@ -5,8 +5,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.mba.tmalcher.fiapandroid.activities.ProductList
 import com.mba.tmalcher.fiapandroid.activities.RegisterUser
+import com.mba.tmalcher.fiapandroid.firebase.Login
+import com.mba.tmalcher.fiapandroid.utils.helpers
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mRegisterAccount: TextView
     private lateinit var mBtnLogin: Button
 
+    private val mFirebaseuser = Login()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,6 +27,11 @@ class MainActivity : AppCompatActivity() {
         mInputUser = findViewById<TextView>(R.id.inputUsername)
         mPassword = findViewById<TextView>(R.id.inputPassword)
         mRegisterAccount = findViewById(R.id.textCreateNewAccount)
+        mBtnLogin = findViewById(R.id.btnLogin)
+
+        if(mFirebaseuser.getCurrentUser() != null) {
+            goToProductList()
+        }
 
         mRegisterAccount.setOnClickListener {
             val intent = Intent(this, RegisterUser::class.java)
@@ -29,6 +39,30 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
+        mBtnLogin.setOnClickListener {
+            val email = mInputUser.text.toString()
+            val password = mPassword.text.toString()
+            if(!email.isEmpty() || !password.isEmpty()) {
+                if(helpers(applicationContext).isValidEmail(email)) {
+                    mFirebaseuser.loginUser(email, password) { success ->
+                        if (success) {
+                            goToProductList()
+                        } else {
+                            Toast.makeText(applicationContext, getString(R.string.msg_login_failure),
+                                Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                else {
+                    Toast.makeText(applicationContext, getString(R.string.msg_fields_email),
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
+            else {
+                Toast.makeText(applicationContext, getString(R.string.msg_fields),
+                    Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -41,6 +75,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+    }
+
+    fun goToProductList() {
+          val intent = Intent(this, ProductList::class.java)
+          startActivity(intent)
+          finish()
     }
 
 }
