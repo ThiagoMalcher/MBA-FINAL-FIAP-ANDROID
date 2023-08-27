@@ -2,7 +2,6 @@ package com.mba.tmalcher.fiapandroid
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -10,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mba.tmalcher.fiapandroid.activities.ProductList
 import com.mba.tmalcher.fiapandroid.activities.RegisterUser
 import com.mba.tmalcher.fiapandroid.firebase.Login
-import com.mba.tmalcher.fiapandroid.utils.helpers
+import com.mba.tmalcher.fiapandroid.utils.Helpers
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,10 +23,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //request permissions
+        Helpers(applicationContext).requestPermissions(this)
+
         mInputUser = findViewById<TextView>(R.id.inputUsername)
         mPassword = findViewById<TextView>(R.id.inputPassword)
         mRegisterAccount = findViewById(R.id.textCreateNewAccount)
         mBtnLogin = findViewById(R.id.btnLogin)
+
 
         if(mFirebaseuser.getCurrentUser() != null) {
             goToProductList()
@@ -43,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             val email = mInputUser.text.toString()
             val password = mPassword.text.toString()
             if(!email.isEmpty() || !password.isEmpty()) {
-                if(helpers(applicationContext).isValidEmail(email)) {
+                if(Helpers(applicationContext).isValidEmail(email)) {
                     mFirebaseuser.loginUser(email, password) { success ->
                         if (success) {
                             goToProductList()
