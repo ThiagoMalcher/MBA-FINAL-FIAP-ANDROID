@@ -38,6 +38,7 @@ class Products(private val products: MutableList<Product>, private val listener:
 
 
         holder.removeButton.setOnClickListener {
+            //Delete produc firebase
             Delete().product(currentProduct.name)
             listener.onRemoveProductClick(currentProduct)
         }
