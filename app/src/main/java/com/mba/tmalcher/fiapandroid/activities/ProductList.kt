@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mba.tmalcher.fiapandroid.R
 import com.mba.tmalcher.fiapandroid.adapter.Products
 import com.mba.tmalcher.fiapandroid.firebase.Upload
@@ -18,6 +19,7 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
 
     private val products = mutableListOf<Product>()
     private lateinit var productAdapter: Products
+    val db = FirebaseFirestore.getInstance()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,14 +30,9 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
         productAdapter = Products(products, this)
         recyclerView.adapter = productAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
-
+        getProductsAndSetList()
         val addButton: Button = findViewById(R.id.addButton)
         addButton.setOnClickListener {
-          //  val newProductId = products.size + 1
-           // val newProduct = Product(newProductId, "Product $newProductId", "URL_DA_IMAGEM")
-
-          //  products.add(newProduct)
-          //  productAdapter.notifyItemInserted(products.size - 1)
             val intent = Intent(this, RegisterProduct::class.java)
             startActivity(intent)
             finish()
@@ -48,6 +45,23 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
             products.removeAt(position)
             productAdapter.notifyItemRemoved(position)
         }
+    }
+
+    fun getProductsAndSetList() {
+        db.collection("products")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val itemData = document.data
+                    val newProductId = products.size + 1
+                    val newProduct = Product(newProductId, document.data.get("name").toString(), document.data.get("imageUrl").toString())
+                    products.add(newProduct)
+                    productAdapter.notifyItemInserted(products.size - 1)
+                }
+            }
+            .addOnFailureListener { exception ->
+                println("Erro ao recuperar itens: $exception")
+            }
     }
 
 

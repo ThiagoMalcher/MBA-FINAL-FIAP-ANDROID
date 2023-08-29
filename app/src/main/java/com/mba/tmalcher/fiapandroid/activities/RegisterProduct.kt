@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.mba.tmalcher.fiapandroid.R
 import com.mba.tmalcher.fiapandroid.firebase.Upload
+import com.mba.tmalcher.fiapandroid.model.Product
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -34,11 +35,11 @@ class RegisterProduct : AppCompatActivity(){
     private val REQUEST_IMAGE_GALLERY = 0
     private val REQUEST_IMAGE = 1
     private lateinit var currentPhotoPath: String
-
+    private val products = mutableListOf<Product>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.actitivy_register_product)
-        //openGallery()
+
         mProductName = findViewById<TextView>(R.id.inputProductName)
         mSaveProduct = findViewById<Button>(R.id.buttonSave)
         mSelectPhoto = findViewById<Button>(R.id.buttonChoosePhoto)
@@ -56,7 +57,8 @@ class RegisterProduct : AppCompatActivity(){
         mSaveProduct.setOnClickListener(View.OnClickListener {
             if(mProductName.text.toString().isNotEmpty()) {
                 mProductName.text.toString()
-                regProd(mProductName.text.toString(), 1, imageUri)
+                val newProductId = products.size + 1
+                regProd(mProductName.text.toString(), newProductId, imageUri)
             }
         })
     }
@@ -93,6 +95,7 @@ class RegisterProduct : AppCompatActivity(){
             onSuccess = {
                 Toast.makeText(applicationContext, getString(R.string.app_product_update),
                     Toast.LENGTH_SHORT).show()
+                goToProductList()
             },
             onFailure = { errorMessage ->
                 Toast.makeText(applicationContext, getString(R.string.app_product_update_error),
@@ -133,6 +136,12 @@ class RegisterProduct : AppCompatActivity(){
             }
 
         }
+    }
+
+    fun goToProductList() {
+        val intent = Intent(this, ProductList::class.java)
+        startActivity(intent)
+        finish()
     }
 
 }
