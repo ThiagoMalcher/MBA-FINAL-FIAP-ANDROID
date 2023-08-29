@@ -10,8 +10,8 @@
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_margin="@dimen/default_margin_16"
+        android:layout_marginTop="@dimen/default_margin_16"
         android:scaleType="centerCrop"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,58 +22,64 @@
         android:id="@+id/buttonChoosePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin_16"
+        android:layout_marginEnd="@dimen/default_margin_8"
+        android:layout_marginBottom="@dimen/default_margin_16"
         android:text="@string/app_product_add"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txtProductName"
         app:layout_constraintEnd_toStartOf="@+id/buttonTakePhoto"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
     <Button
         android:id="@+id/buttonTakePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin_8"
+        android:layout_marginTop="@dimen/default_margin_16"
+        android:layout_marginBottom="@dimen/default_margin_16"
         android:text="@string/app_product_add_camera"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/buttonChoosePhoto"
+        app:layout_constraintBottom_toTopOf="@+id/txtProductName"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="8dp"/>
+        app:layout_constraintStart_toEndOf="@+id/buttonChoosePhoto"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtProductName"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="360dp"
-        android:layout_height="63dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="500dp"
-        android:layout_marginEnd="70dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin_24"
+        android:layout_marginEnd="@dimen/default_margin_24"
+        android:layout_marginBottom="@dimen/default_margin_32"
         android:hint="@string/app_product_add_name"
-        android:textColorHint="#A7A7A7"
-        app:boxStrokeColor="#EAEAEE"
+        android:textColorHint="@color/color_grey"
+        app:boxStrokeColor="@color/color_grey"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSave"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputProductName"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:textColor="#5B5B5B"
-            android:textSize="15sp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_grey"
+            android:textSize="@dimen/default_size_16"
             android:textStyle="bold"
             tools:ignore="TouchTargetSizeCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/buttonSave"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="@dimen/default_margin_32"
+        android:layout_marginEnd="@dimen/default_margin_32"
+        android:layout_marginBottom="@dimen/margin_128"
         android:text="@string/app_product_add_save"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtProductName" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

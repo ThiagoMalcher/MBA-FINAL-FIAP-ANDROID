@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "265241176812",
+    "firebase_url": "https://mba-fiap-ff972-default-rtdb.firebaseio.com",
+    "project_id": "mba-fiap-ff972",
+    "storage_bucket": "mba-fiap-ff972.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265241176812:android:a9337c655b7ee93250d3c9",
+        "android_client_info": {
+          "package_name": "com.mba.malcher.finalmba"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "265241176812-1h3maea1dfcs59tj9antfdq5mqopbf4e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_fS-BLhhehrW0r-jKvrS8ism7rCWY-bM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "265241176812-1h3maea1dfcs59tj9antfdq5mqopbf4e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "265241176812-tj085a95f1o1f0n2b13b3dbosqufk8tn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mba.malcher.finalmba"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265241176812:android:393f704c212918b750d3c9",
+        "android_client_info": {
+          "package_name": "com.mba.tmalcher.fiapandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "265241176812-tei38m9n4a3hskr6hqkobdnnu6j64q1v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mba.tmalcher.fiapandroid",
+            "certificate_hash": "7eef03bc076d6bfd7cf56338b74ec52c9000428c"
+          }
+        },
+        {
+          "client_id": "265241176812-1h3maea1dfcs59tj9antfdq5mqopbf4e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_fS-BLhhehrW0r-jKvrS8ism7rCWY-bM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "265241176812-1h3maea1dfcs59tj9antfdq5mqopbf4e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "265241176812-tj085a95f1o1f0n2b13b3dbosqufk8tn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mba.malcher.finalmba"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

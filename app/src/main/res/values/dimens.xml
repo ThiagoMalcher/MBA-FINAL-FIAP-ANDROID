@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- region default margin -->
+    <dimen name="default_margin_8">8dp</dimen>
+    <dimen name="default_margin_16">16dp</dimen>
+    <dimen name="default_margin_24">24dp</dimen>
+    <dimen name="default_margin_32">32dp</dimen>
+    <dimen name="default_margin_64">64dp</dimen>
+
+    <!-- region margin -->
+    <dimen name="margin_128">128dp</dimen>
+    <dimen name="margin_200">200dp</dimen>
+    <dimen name="margin_250">250dp</dimen>
+
+    <!-- region default padding -->
+    <dimen name="default_padding_8">8dp</dimen>
+
+    <!-- region default size -->
+    <dimen name="default_size_12">12sp</dimen>
+    <dimen name="default_size_16">16sp</dimen>
+    <dimen name="default_size_24">24sp</dimen>
+
+</resources>
