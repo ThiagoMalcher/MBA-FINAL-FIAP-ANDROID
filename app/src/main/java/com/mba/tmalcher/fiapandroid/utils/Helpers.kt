@@ -3,9 +3,13 @@ package com.mba.tmalcher.fiapandroid.utils
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.widget.Button
 import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
+import com.mba.tmalcher.fiapandroid.R
 
 class Helpers(private val context: Context) {
 
@@ -48,4 +52,5 @@ class Helpers(private val context: Context) {
             )
         }
     }
+
 }

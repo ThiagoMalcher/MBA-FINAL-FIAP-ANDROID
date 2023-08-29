@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mba.tmalcher.fiapandroid.MainActivity
 import com.mba.tmalcher.fiapandroid.R
 import com.mba.tmalcher.fiapandroid.firebase.Register
-import com.mba.tmalcher.fiapandroid.utils.helpers
+import com.mba.tmalcher.fiapandroid.utils.Helpers
 
 class RegisterUser : AppCompatActivity() {
 
@@ -40,8 +40,8 @@ class RegisterUser : AppCompatActivity() {
         val txtUserName = mUserName.text.toString()
 
         if(!txtUserName.isEmpty() || !txtPassword.isEmpty() || !txtEmail.isEmpty()) {
-            if(helpers(applicationContext).isValidEmail(txtEmail) ||
-                helpers(applicationContext).isPasswordValid(txtPassword)) {
+            if(Helpers(applicationContext).isValidEmail(txtEmail) ||
+                Helpers(applicationContext).isPasswordValid(txtPassword)) {
 
                 val firebase = Register(applicationContext)
                 firebase.registerUser( txtEmail, txtPassword, txtUserName) { success ->

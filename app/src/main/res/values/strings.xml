@@ -16,5 +16,12 @@
     <string name="msg_fields_email">E-mail or password are not valid.</string>
     <string name="msg_products_add">Add Product</string>
     <string name="msg_login_failure">Error when logging in</string>
-
+    <string name="app_product_name">Product</string>
+    <string name="app_product_remove">Remove</string>
+    <string name="app_product_add">Choose photo</string>
+    <string name="app_product_add_camera">Use camera</string>
+    <string name="app_product_add_name">Product name</string>
+    <string name="app_product_add_save">Save</string>
+    <string name="app_product_update">Saved successfully</string>
+    <string name="app_product_update_error">Was not saved</string>
 </resources>

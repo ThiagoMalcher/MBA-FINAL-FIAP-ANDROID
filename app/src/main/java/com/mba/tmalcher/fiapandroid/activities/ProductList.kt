@@ -1,18 +1,24 @@
 package com.mba.tmalcher.fiapandroid.activities
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mba.tmalcher.fiapandroid.R
 import com.mba.tmalcher.fiapandroid.adapter.Products
+import com.mba.tmalcher.fiapandroid.firebase.Upload
 import com.mba.tmalcher.fiapandroid.model.Product
 
 class ProductList : AppCompatActivity(), Products.ProductListener {
 
     private val products = mutableListOf<Product>()
     private lateinit var productAdapter: Products
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,10 +31,14 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
 
         val addButton: Button = findViewById(R.id.addButton)
         addButton.setOnClickListener {
-            val newProductId = products.size + 1
-            val newProduct = Product(newProductId, "Product $newProductId", "URL_DA_IMAGEM")
-            products.add(newProduct)
-            productAdapter.notifyItemInserted(products.size - 1)
+          //  val newProductId = products.size + 1
+           // val newProduct = Product(newProductId, "Product $newProductId", "URL_DA_IMAGEM")
+
+          //  products.add(newProduct)
+          //  productAdapter.notifyItemInserted(products.size - 1)
+            val intent = Intent(this, RegisterProduct::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
@@ -39,4 +49,6 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
             productAdapter.notifyItemRemoved(position)
         }
     }
+
+
 }
