@@ -1,5 +1,7 @@
 package com.mba.tmalcher.fiapandroid.firebase
 
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -19,4 +21,18 @@ class Login {
                 }
             }
     }
+
+    fun recoverLogin(email: String, callback: (Boolean) -> Unit) {
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener(OnCompleteListener { task: Task<Void?> ->
+                if (task.isSuccessful) {
+                    // O email de recuperação foi enviado com sucesso
+                    callback(true)
+                } else {
+                    // Ocorreu um erro ao enviar o email de recuperação
+                    callback(false)
+                }
+            })
+    }
+
 }

@@ -25,4 +25,6 @@
     <string name="app_product_add_save">Salvar</string>
     <string name="app_product_update">Salvo com sucesso</string>
     <string name="app_product_update_error">Não foi salvo</string>
+    <string name="app_recover_password">Enviar e-mail</string>
+    <string name="app_recover_password_msg">Você receberá um e-mail para alterar sua senha.</string>
 </resources>

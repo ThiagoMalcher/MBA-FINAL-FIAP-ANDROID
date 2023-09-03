@@ -38,7 +38,7 @@ class RegisterProduct : AppCompatActivity(){
     private val products = mutableListOf<Product>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.actitivy_register_product)
+        setContentView(R.layout.activity_register_product)
 
         mProductName = findViewById<TextView>(R.id.inputProductName)
         mSaveProduct = findViewById<Button>(R.id.buttonSave)
@@ -55,10 +55,14 @@ class RegisterProduct : AppCompatActivity(){
         })
 
         mSaveProduct.setOnClickListener(View.OnClickListener {
-            if(mProductName.text.toString().isNotEmpty()) {
+            if(mProductName.text.toString().isNotEmpty() && mImageView.drawable != null) {
                 mProductName.text.toString()
                 val newProductId = products.size + 1
                 regProd(mProductName.text.toString(), newProductId, imageUri)
+            }
+            else {
+                Toast.makeText(applicationContext, getString(R.string.msg_fields),
+                    Toast.LENGTH_SHORT).show()
             }
         })
     }

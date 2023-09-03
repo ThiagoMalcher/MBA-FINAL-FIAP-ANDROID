@@ -80,4 +80,9 @@ class RegisterUser : AppCompatActivity() {
         mPassword.setText("")
         mUserName.setText("")
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }

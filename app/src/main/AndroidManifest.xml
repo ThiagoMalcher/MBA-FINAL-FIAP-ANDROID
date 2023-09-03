@@ -36,9 +36,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activities.RegisterUser" />
         <activity android:name=".activities.ProductList" />
         <activity android:name=".activities.RegisterProduct" />
+        <activity android:name=".activities.RecoverPassword"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

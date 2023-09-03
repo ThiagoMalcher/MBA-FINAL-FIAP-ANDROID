@@ -23,4 +23,6 @@
     <string name="app_product_add_save">Save</string>
     <string name="app_product_update">Saved successfully</string>
     <string name="app_product_update_error">Was not saved</string>
+    <string name="app_recover_password">Send e-mail</string>
+    <string name="app_recover_password_msg">You will receive an email to change your password.</string>
 </resources>

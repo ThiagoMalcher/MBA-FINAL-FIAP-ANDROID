@@ -7,6 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mba.tmalcher.fiapandroid.activities.ProductList
+import com.mba.tmalcher.fiapandroid.activities.RecoverPassword
 import com.mba.tmalcher.fiapandroid.activities.RegisterUser
 import com.mba.tmalcher.fiapandroid.firebase.Login
 import com.mba.tmalcher.fiapandroid.utils.Helpers
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mPassword: TextView
     private lateinit var mRegisterAccount: TextView
     private lateinit var mBtnLogin: Button
+    private lateinit var mTextForgotPassw: TextView
 
     private val mFirebaseuser = Login()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,16 +32,25 @@ class MainActivity : AppCompatActivity() {
         mPassword = findViewById<TextView>(R.id.inputPassword)
         mRegisterAccount = findViewById(R.id.textCreateNewAccount)
         mBtnLogin = findViewById(R.id.btnLogin)
+        mTextForgotPassw = findViewById<TextView>(R.id.textForgotPassw);
+
 
 
         if(mFirebaseuser.getCurrentUser() != null) {
             goToProductList()
         }
 
+        mTextForgotPassw.setOnClickListener {
+            val intent = Intent(this, RecoverPassword::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+
         mRegisterAccount.setOnClickListener {
             val intent = Intent(this, RegisterUser::class.java)
             startActivity(intent)
-            finish()
+           // finish()
         }
 
         mBtnLogin.setOnClickListener {
