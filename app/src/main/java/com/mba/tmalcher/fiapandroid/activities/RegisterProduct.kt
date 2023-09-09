@@ -1,12 +1,15 @@
 package com.mba.tmalcher.fiapandroid.activities
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.ContentResolver
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
@@ -36,6 +39,8 @@ class RegisterProduct : AppCompatActivity(){
     private val REQUEST_IMAGE = 1
     private lateinit var currentPhotoPath: String
     private val products = mutableListOf<Product>()
+    private lateinit var progressDialog: ProgressDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_product)
@@ -56,6 +61,7 @@ class RegisterProduct : AppCompatActivity(){
 
         mSaveProduct.setOnClickListener(View.OnClickListener {
             if(mProductName.text.toString().isNotEmpty() && mImageView.drawable != null) {
+                showProgressDialog()
                 mProductName.text.toString()
                 val newProductId = products.size + 1
                 regProd(mProductName.text.toString(), newProductId, imageUri)
@@ -97,6 +103,7 @@ class RegisterProduct : AppCompatActivity(){
     fun regProd(productName:String, prodId:Int, imageUri:Uri) {
         Upload().productWithImage(productName, prodId, imageUri!!,
             onSuccess = {
+                progressDialog.dismiss()
                 Toast.makeText(applicationContext, getString(R.string.app_product_update),
                     Toast.LENGTH_SHORT).show()
                 goToProductList()
@@ -141,11 +148,19 @@ class RegisterProduct : AppCompatActivity(){
 
         }
     }
-
     fun goToProductList() {
         val intent = Intent(this, ProductList::class.java)
         startActivity(intent)
         finish()
     }
-
+    private fun showProgressDialog() {
+        progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Salvando...")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }

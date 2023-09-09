@@ -35,7 +35,6 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
         addButton.setOnClickListener {
             val intent = Intent(this, RegisterProduct::class.java)
             startActivity(intent)
-            finish()
         }
     }
 
