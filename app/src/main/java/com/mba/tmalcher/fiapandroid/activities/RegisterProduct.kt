@@ -6,6 +6,8 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -41,6 +43,7 @@ class RegisterProduct : AppCompatActivity(){
     private lateinit var currentPhotoPath: String
     private val products = mutableListOf<Product>()
     private lateinit var progressDialog: ProgressDialog
+    private var isDefaultChanged = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +54,8 @@ class RegisterProduct : AppCompatActivity(){
         mSelectPhoto = findViewById(R.id.buttonChoosePhoto)
         mImageView = findViewById(R.id.imageView)
         mTakePhoto = findViewById(R.id.buttonTakePhoto)
+
+        mImageView.setImageResource(R.drawable.product)
 
         mProductName.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -71,13 +76,12 @@ class RegisterProduct : AppCompatActivity(){
         })
 
         mSaveProduct.setOnClickListener(View.OnClickListener {
-            if(mProductName.text.toString().isNotEmpty() && mImageView.drawable != null) {
+            if(mProductName.text.toString().isNotEmpty() && isDefaultChanged) {
                 showProgressDialog()
                 mProductName.text.toString()
                 val newProductId = products.size + 1
                 regProd(mProductName.text.toString(), newProductId, imageUri)
-            }
-            else {
+            } else {
                 Toast.makeText(applicationContext, getString(R.string.msg_fields),
                     Toast.LENGTH_SHORT).show()
             }
@@ -119,7 +123,7 @@ class RegisterProduct : AppCompatActivity(){
                     Toast.LENGTH_SHORT).show()
                 goToProductList()
             },
-            onFailure = { errorMessage ->
+            onFailure = { _ ->
                 Toast.makeText(applicationContext, getString(R.string.app_product_update_error),
                     Toast.LENGTH_SHORT).show()
             }
@@ -143,7 +147,7 @@ class RegisterProduct : AppCompatActivity(){
             try {
                 val inputStream = contentResolver.openInputStream(imageUri)
                 mImageView.setImageBitmap(BitmapFactory.decodeStream(inputStream))
-
+                isDefaultChanged = true;
             } catch (e: IOException) {
                 e.printStackTrace()
             }
@@ -153,6 +157,7 @@ class RegisterProduct : AppCompatActivity(){
             try {
                 val inputStream = contentResolver.openInputStream(imageUri)
                 mImageView.setImageBitmap(BitmapFactory.decodeStream(inputStream))
+                isDefaultChanged = true;
             } catch (e: IOException) {
                 e.printStackTrace()
             }
