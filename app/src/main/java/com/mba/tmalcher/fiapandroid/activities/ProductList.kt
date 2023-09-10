@@ -1,19 +1,17 @@
 package com.mba.tmalcher.fiapandroid.activities
 
-import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.mba.tmalcher.fiapandroid.MainActivity
 import com.mba.tmalcher.fiapandroid.R
 import com.mba.tmalcher.fiapandroid.adapter.Products
-import com.mba.tmalcher.fiapandroid.firebase.Upload
 import com.mba.tmalcher.fiapandroid.model.Product
 
 class ProductList : AppCompatActivity(), Products.ProductListener {
@@ -21,7 +19,7 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
     private val products = mutableListOf<Product>()
     private lateinit var productAdapter: Products
     val db = FirebaseFirestore.getInstance()
-
+    val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +60,30 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
             .addOnFailureListener { exception ->
                 println("Erro ao recuperar itens: $exception")
             }
+    }
+
+    private fun showLogoutConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Logout")
+        builder.setMessage("Tem certeza de que deseja sair da aplicação?")
+
+        builder.setNegativeButton("Cancelar") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        builder.setPositiveButton("Confirmar") { _, _ ->
+            auth.signOut()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    override fun onBackPressed() {
+        showLogoutConfirmationDialog()
     }
 
 
