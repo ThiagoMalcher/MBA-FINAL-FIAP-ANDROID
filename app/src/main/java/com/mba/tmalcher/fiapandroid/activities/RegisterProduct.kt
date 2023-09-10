@@ -3,15 +3,16 @@ package com.mba.tmalcher.fiapandroid.activities
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.os.Handler
-import android.os.Looper
 import android.provider.MediaStore
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -45,11 +46,21 @@ class RegisterProduct : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_product)
 
-        mProductName = findViewById<TextView>(R.id.inputProductName)
-        mSaveProduct = findViewById<Button>(R.id.buttonSave)
-        mSelectPhoto = findViewById<Button>(R.id.buttonChoosePhoto)
-        mImageView = findViewById<ImageView>(R.id.imageView)
-        mTakePhoto = findViewById<Button>(R.id.buttonTakePhoto)
+        mProductName = findViewById(R.id.inputProductName)
+        mSaveProduct = findViewById(R.id.buttonSave)
+        mSelectPhoto = findViewById(R.id.buttonChoosePhoto)
+        mImageView = findViewById(R.id.imageView)
+        mTakePhoto = findViewById(R.id.buttonTakePhoto)
+
+        mProductName.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(mProductName.windowToken, 0)
+                true
+            } else {
+                false
+            }
+        }
 
         mSelectPhoto.setOnClickListener(View.OnClickListener {
             openGallery()

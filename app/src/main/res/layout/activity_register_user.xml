@@ -29,6 +29,7 @@
             android:textColor="@color/color_white"
             android:textSize="@dimen/default_margin_16"
             android:textStyle="bold"
+            android:inputType="textEmailAddress"
             tools:ignore="TouchTargetSizeCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -54,6 +55,7 @@
             android:textColor="@color/color_white"
             android:textSize="@dimen/default_size_16"
             android:textStyle="bold"
+            android:inputType="text"
             tools:ignore="TouchTargetSizeCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,6 +82,7 @@
             android:textColor="@color/color_white"
             android:textSize="@dimen/default_size_16"
             android:textStyle="bold"
+            android:inputType="textPassword"
             tools:ignore="TouchTargetSizeCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 

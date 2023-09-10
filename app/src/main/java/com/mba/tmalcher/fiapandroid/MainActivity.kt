@@ -1,7 +1,10 @@
 package com.mba.tmalcher.fiapandroid
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -28,29 +31,42 @@ class MainActivity : AppCompatActivity() {
         //request permissions
         Helpers(applicationContext).requestPermissions(this)
 
-        mInputUser = findViewById<TextView>(R.id.inputUsername)
-        mPassword = findViewById<TextView>(R.id.inputPassword)
+        mInputUser = findViewById(R.id.inputUsername)
+        mPassword = findViewById(R.id.inputPassword)
         mRegisterAccount = findViewById(R.id.textCreateNewAccount)
         mBtnLogin = findViewById(R.id.btnLogin)
-        mTextForgotPassw = findViewById<TextView>(R.id.textForgotPassw);
-
-
+        mTextForgotPassw = findViewById(R.id.textForgotPassw);
 
         if(mFirebaseuser.getCurrentUser() != null) {
             goToProductList()
         }
 
+        mInputUser.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                mPassword.requestFocus()
+                return@OnEditorActionListener true
+            }
+            false
+        })
+
+        mPassword.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(mPassword.windowToken, 0)
+                true
+            } else {
+                false
+            }
+        }
+
         mTextForgotPassw.setOnClickListener {
             val intent = Intent(this, RecoverPassword::class.java)
             startActivity(intent)
-            finish()
         }
-
 
         mRegisterAccount.setOnClickListener {
             val intent = Intent(this, RegisterUser::class.java)
             startActivity(intent)
-           // finish()
         }
 
         mBtnLogin.setOnClickListener {
@@ -77,18 +93,6 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
     }
 
     fun goToProductList() {

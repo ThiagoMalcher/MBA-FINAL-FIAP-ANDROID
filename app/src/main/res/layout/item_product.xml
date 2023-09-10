@@ -5,23 +5,26 @@
     android:orientation="horizontal"
     android:padding="@dimen/default_padding_8">
 
-    <TextView
-        android:id="@+id/productNameTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/app_product_name"
-        android:textSize="@dimen/default_size_16" />
-
     <ImageView
         android:id="@+id/productImageView"
         android:layout_width="@dimen/default_margin_64"
         android:layout_height="@dimen/default_margin_64"
         android:scaleType="centerCrop" />
 
-    <Button
-        android:id="@+id/removeButton"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/productNameTextView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/app_product_remove" />
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/default_margin_16"
+        android:layout_marginTop="@dimen/default_margin_16"
+        android:text="@string/app_product_name"
+        android:textSize="@dimen/default_size_16" />
+
+    <ImageView
+        android:id="@+id/removeButton"
+        android:layout_width="@dimen/default_margin_64"
+        android:layout_height="@dimen/default_margin_64"
+        android:src="@android:drawable/ic_menu_delete"
+        android:background="@drawable/circle_background" />
 </LinearLayout>

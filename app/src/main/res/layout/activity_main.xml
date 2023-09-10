@@ -30,6 +30,7 @@
             android:textColor="@color/color_white"
             android:textSize="@dimen/default_size_16"
             android:textStyle="bold"
+            android:inputType="text"
             tools:ignore="TouchTargetSizeCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -56,6 +57,7 @@
             android:textColor="@color/color_white"
             android:textSize="@dimen/default_size_16"
             android:textStyle="bold"
+            android:inputType="textPassword"
             tools:ignore="TouchTargetSizeCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,21 +77,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-
-
     <TextView
         android:id="@+id/textCreateNewAccount"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin_16"
-        android:layout_marginEnd="@dimen/default_margin_32"
-        android:gravity="right"
+        android:layout_marginTop="@dimen/default_margin_32"
         android:text="@string/app_new_account"
         android:textColor="@color/color_white"
-        android:textSize="@dimen/default_size_12"
+        android:textSize="@dimen/default_size_16"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textViewTitle"
@@ -118,6 +119,7 @@
         android:gravity="right"
         android:text="@string/app_forgot"
         android:textColor="@color/color_white"
+        android:textSize="@dimen/default_size_16"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

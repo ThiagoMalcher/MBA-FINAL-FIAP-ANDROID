@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mba.tmalcher.fiapandroid.R
 import com.mba.tmalcher.fiapandroid.adapter.Products
@@ -31,7 +32,7 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
         recyclerView.adapter = productAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         getProductsAndSetList()
-        val addButton: Button = findViewById(R.id.addButton)
+        val addButton: FloatingActionButton = findViewById(R.id.addButton)
         addButton.setOnClickListener {
             val intent = Intent(this, RegisterProduct::class.java)
             startActivity(intent)

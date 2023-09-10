@@ -1,8 +1,11 @@
 package com.mba.tmalcher.fiapandroid.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -23,10 +26,36 @@ class RegisterUser : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_user)
 
-        mInputEmail = findViewById<TextView>(R.id.inputtxtUserEmail)
-        mPassword = findViewById<TextView>(R.id.inputPassword)
-        mUserName = findViewById<TextView>(R.id.inputtxtUsername)
-        mBtnRegister = findViewById<Button>(R.id.btnRegister)
+        mInputEmail = findViewById(R.id.inputtxtUserEmail)
+        mPassword = findViewById(R.id.inputPassword)
+        mUserName = findViewById(R.id.inputtxtUsername)
+        mBtnRegister = findViewById(R.id.btnRegister)
+
+        mInputEmail.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                mUserName.requestFocus()
+                return@OnEditorActionListener true
+            }
+            false
+        })
+
+        mUserName.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                mPassword.requestFocus()
+                return@OnEditorActionListener true
+            }
+            false
+        })
+
+        mPassword.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(mPassword.windowToken, 0)
+                true
+            } else {
+                false
+            }
+        }
 
         mBtnRegister.setOnClickListener(View.OnClickListener {
             registerUser();

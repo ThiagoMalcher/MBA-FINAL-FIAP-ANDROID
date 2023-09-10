@@ -20,7 +20,7 @@ class Products(private val products: MutableList<Product>, private val listener:
 
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val productNameTextView: TextView = itemView.findViewById(R.id.productNameTextView)
-        val removeButton: Button = itemView.findViewById(R.id.removeButton)
+        val removeButton: ImageView = itemView.findViewById(R.id.removeButton)
         val imageView:ImageView = itemView.findViewById(R.id.productImageView)
     }
 
