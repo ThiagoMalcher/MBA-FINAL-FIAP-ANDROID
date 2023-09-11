@@ -45,8 +45,12 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
         }
     }
 
-    fun getProductsAndSetList() {
-        db.collection("products")
+    private fun getProductsAndSetList() {
+        val userId = auth.currentUser?.uid ?: return
+
+        db.collection("users")
+            .document(userId)
+            .collection("products")
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {

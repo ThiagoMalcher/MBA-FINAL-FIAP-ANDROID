@@ -1,22 +1,22 @@
 package com.mba.tmalcher.fiapandroid.firebase
 
 import android.net.Uri
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.mba.tmalcher.fiapandroid.model.Product
 
 class Upload {
     private val storage: FirebaseStorage = FirebaseStorage.getInstance()
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     fun productWithImage(name: String, id: Int, imageUri: Uri, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
-
+        val userId = auth.currentUser?.uid ?: return
         val storageRef = storage.reference
 
         val imageName = name.replace(" ", "_")
-        var spaceRef = storageRef.child("images/$imageName" + ".jpg")
+        var spaceRef = storageRef.child("users/$userId/images/$imageName.jpg")
         val uploadTask = spaceRef.putFile(imageUri)
 
         uploadTask.addOnSuccessListener {
@@ -28,12 +28,14 @@ class Upload {
                     imageUrl = imageUrl
                 )
 
-                db.collection("products")
+                db.collection("users")
+                    .document(userId)
+                    .collection("products")
                     .add(product)
                     .addOnSuccessListener {
                         onSuccess()
                     }
-                    .addOnFailureListener { e ->
+                    .addOnFailureListener { _ ->
                         onFailure("Erro ao salvar o produto")
                     }
 

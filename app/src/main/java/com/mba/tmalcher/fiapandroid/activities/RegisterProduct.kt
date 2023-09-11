@@ -126,6 +126,7 @@ class RegisterProduct : AppCompatActivity(){
             onFailure = { _ ->
                 Toast.makeText(applicationContext, getString(R.string.app_product_update_error),
                     Toast.LENGTH_SHORT).show()
+                progressDialog.dismiss()
             }
         )
     }
@@ -164,7 +165,7 @@ class RegisterProduct : AppCompatActivity(){
 
         }
     }
-    fun goToProductList() {
+    private fun goToProductList() {
         val intent = Intent(this, ProductList::class.java)
         startActivity(intent)
         finish()
