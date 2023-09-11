@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         mPassword = findViewById(R.id.inputPassword)
         mRegisterAccount = findViewById(R.id.textCreateNewAccount)
         mBtnLogin = findViewById(R.id.btnLogin)
-        mTextForgotPassw = findViewById(R.id.textForgotPassw);
+        mTextForgotPassw = findViewById(R.id.textForgotPassw)
 
         if(mFirebaseuser.getCurrentUser() != null) {
             goToProductList()
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         mBtnLogin.setOnClickListener {
             val email = mInputUser.text.toString()
             val password = mPassword.text.toString()
-            if(!email.isEmpty() || !password.isEmpty()) {
+            if(email.isNotEmpty() || password.isNotEmpty()) {
                 if(Helpers(applicationContext).isValidEmail(email)) {
                     mFirebaseuser.loginUser(email, password) { success ->
                         if (success) {

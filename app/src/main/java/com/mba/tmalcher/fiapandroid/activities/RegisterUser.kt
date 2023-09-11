@@ -57,7 +57,7 @@ class RegisterUser : AppCompatActivity() {
         }
 
         mBtnRegister.setOnClickListener {
-            registerUser();
+            registerUser()
         }
     }
 

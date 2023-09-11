@@ -146,7 +146,7 @@ class RegisterProduct : AppCompatActivity(){
             try {
                 val inputStream = contentResolver.openInputStream(imageUri)
                 mImageView.setImageBitmap(BitmapFactory.decodeStream(inputStream))
-                isDefaultChanged = true;
+                isDefaultChanged = true
             } catch (e: IOException) {
                 e.printStackTrace()
             }
@@ -156,7 +156,7 @@ class RegisterProduct : AppCompatActivity(){
             try {
                 val inputStream = contentResolver.openInputStream(imageUri)
                 mImageView.setImageBitmap(BitmapFactory.decodeStream(inputStream))
-                isDefaultChanged = true;
+                isDefaultChanged = true
             } catch (e: IOException) {
                 e.printStackTrace()
             }

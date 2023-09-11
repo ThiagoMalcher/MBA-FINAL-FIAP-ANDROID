@@ -18,8 +18,8 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
 
     private val products = mutableListOf<Product>()
     private lateinit var productAdapter: Products
-    val db = FirebaseFirestore.getInstance()
-    val auth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +56,7 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
                 for (document in documents) {
                     val itemData = document.data
                     val newProductId = products.size + 1
-                    val newProduct = Product(newProductId, document.data.get("name").toString(), document.data.get("imageUrl").toString())
+                    val newProduct = Product(newProductId, itemData["name"].toString(), itemData["imageUrl"].toString())
                     products.add(newProduct)
                     productAdapter.notifyItemInserted(products.size - 1)
                 }

@@ -16,7 +16,7 @@ class Upload {
         val storageRef = storage.reference
 
         val imageName = name.replace(" ", "_")
-        var spaceRef = storageRef.child("users/$userId/images/$imageName.jpg")
+        val spaceRef = storageRef.child("users/$userId/images/$imageName.jpg")
         val uploadTask = spaceRef.putFile(imageUri)
 
         uploadTask.addOnSuccessListener {
