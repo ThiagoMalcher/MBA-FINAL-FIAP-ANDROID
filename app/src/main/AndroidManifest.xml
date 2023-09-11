@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
     <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!--CAMERA PERMISSIONS-->
     <uses-permission android:name="android.permission.CAMERA" />
@@ -41,6 +41,7 @@
         <activity android:name=".activities.ProductList" />
         <activity android:name=".activities.RegisterProduct" />
         <activity android:name=".activities.RecoverPassword"/>
+        <activity android:name=".activities.EditProduct"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

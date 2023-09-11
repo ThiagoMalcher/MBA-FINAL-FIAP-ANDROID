@@ -19,7 +19,7 @@ class Delete {
                 val query =  db.collection("users")
                     .document(userId)
                     .collection("products")
-                    .whereEqualTo("name", productName)
+                    .whereEqualTo("imageName", productName)
 
                 query.get()
                     .addOnSuccessListener { querySnapshot ->

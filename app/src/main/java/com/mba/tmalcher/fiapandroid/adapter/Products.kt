@@ -1,16 +1,13 @@
 package com.mba.tmalcher.fiapandroid.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mba.tmalcher.fiapandroid.R
-import com.mba.tmalcher.fiapandroid.activities.RegisterProduct
 import com.mba.tmalcher.fiapandroid.firebase.Delete
 import com.mba.tmalcher.fiapandroid.model.Product
 
@@ -18,7 +15,7 @@ class Products(private val products: MutableList<Product>, private val listener:
 
     interface ProductListener {
         fun onRemoveProductClick(product: Product)
-        fun onEditProductClick(name: String)
+        fun onEditProductClick(name: String, index: Int)
     }
 
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -41,13 +38,11 @@ class Products(private val products: MutableList<Product>, private val listener:
             .into(holder.imageView)
 
         holder.editButton.setOnClickListener {
-            listener.onEditProductClick(currentProduct.name)
+            listener.onEditProductClick(currentProduct.imageName, position)
         }
 
         holder.removeButton.setOnClickListener {
-            //Delete product on firebase
-            val names = currentProduct.name
-            Delete().product(currentProduct.name)
+            Delete().product(currentProduct.imageName)
             listener.onRemoveProductClick(currentProduct)
         }
     }
