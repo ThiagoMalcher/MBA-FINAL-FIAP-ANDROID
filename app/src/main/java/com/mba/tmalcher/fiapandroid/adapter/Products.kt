@@ -3,7 +3,6 @@ package com.mba.tmalcher.fiapandroid.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -38,7 +37,7 @@ class Products(private val products: MutableList<Product>, private val listener:
 
 
         holder.removeButton.setOnClickListener {
-            //Delete produc firebase
+            //Delete product on firebase
             Delete().product(currentProduct.name)
             listener.onRemoveProductClick(currentProduct)
         }

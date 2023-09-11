@@ -3,7 +3,6 @@ package com.mba.tmalcher.fiapandroid.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -57,9 +56,9 @@ class RegisterUser : AppCompatActivity() {
             }
         }
 
-        mBtnRegister.setOnClickListener(View.OnClickListener {
+        mBtnRegister.setOnClickListener {
             registerUser();
-        })
+        }
     }
 
     private fun registerUser() {
@@ -72,7 +71,7 @@ class RegisterUser : AppCompatActivity() {
             if(Helpers(applicationContext).isValidEmail(txtEmail) ||
                 Helpers(applicationContext).isPasswordValid(txtPassword)) {
 
-                val firebase = Register(applicationContext)
+                val firebase = Register()
                 firebase.registerUser( txtEmail, txtPassword, txtUserName) { success ->
                     if (success) {
                         Toast.makeText(applicationContext, getString(R.string.msg_firebase_register_successfully),
@@ -104,7 +103,7 @@ class RegisterUser : AppCompatActivity() {
         finish()
     }
 
-    fun cleanInputText() {
+    private fun cleanInputText() {
         mInputEmail.setText("")
         mPassword.setText("")
         mUserName.setText("")

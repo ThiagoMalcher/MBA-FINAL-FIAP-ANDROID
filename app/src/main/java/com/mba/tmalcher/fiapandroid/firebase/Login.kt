@@ -24,7 +24,7 @@ class Login {
 
     fun recoverLogin(email: String, callback: (Boolean) -> Unit) {
         auth.sendPasswordResetEmail(email)
-            .addOnCompleteListener(OnCompleteListener { task: Task<Void?> ->
+            .addOnCompleteListener { task: Task<Void?> ->
                 if (task.isSuccessful) {
                     // O email de recuperação foi enviado com sucesso
                     callback(true)
@@ -32,7 +32,7 @@ class Login {
                     // Ocorreu um erro ao enviar o email de recuperação
                     callback(false)
                 }
-            })
+            }
     }
 
 }

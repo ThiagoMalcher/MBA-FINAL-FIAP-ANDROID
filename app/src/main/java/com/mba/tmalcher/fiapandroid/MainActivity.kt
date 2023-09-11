@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun goToProductList() {
+    private fun goToProductList() {
           val intent = Intent(this, ProductList::class.java)
           startActivity(intent)
           finish()

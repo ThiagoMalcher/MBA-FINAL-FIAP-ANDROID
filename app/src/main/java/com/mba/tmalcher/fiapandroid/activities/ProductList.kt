@@ -90,5 +90,4 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
         showLogoutConfirmationDialog()
     }
 
-
 }

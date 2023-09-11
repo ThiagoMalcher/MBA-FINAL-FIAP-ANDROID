@@ -10,7 +10,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -64,34 +63,36 @@ class RegisterProduct : AppCompatActivity(){
             }
         }
 
-        mSelectPhoto.setOnClickListener(View.OnClickListener {
+        mSelectPhoto.setOnClickListener {
             openGallery()
-        })
+        }
 
-        mTakePhoto.setOnClickListener(View.OnClickListener {
+        mTakePhoto.setOnClickListener {
             takePhoto()
-        })
+        }
 
-        mSaveProduct.setOnClickListener(View.OnClickListener {
-            if(mProductName.text.toString().isNotEmpty() && isDefaultChanged) {
+        mSaveProduct.setOnClickListener {
+            if (mProductName.text.toString().isNotEmpty() && isDefaultChanged) {
                 showProgressDialog()
                 mProductName.text.toString()
                 val newProductId = products.size + 1
-                regProd(mProductName.text.toString(), newProductId, imageUri)
+                registerProduct(mProductName.text.toString(), newProductId, imageUri)
             } else {
-                Toast.makeText(applicationContext, getString(R.string.msg_fields),
-                    Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext, getString(R.string.msg_fields),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        })
+        }
     }
 
-    fun openGallery() {
+    private fun openGallery() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_IMAGE_GALLERY)
     }
 
-    fun takePhoto() {
+    private fun takePhoto() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (takePictureIntent.resolveActivity(packageManager) != null) {
             val photoFile: File? = try {
@@ -112,8 +113,8 @@ class RegisterProduct : AppCompatActivity(){
         }
     }
 
-    fun regProd(productName:String, prodId:Int, imageUri:Uri) {
-        Upload().productWithImage(productName, prodId, imageUri!!,
+    private fun registerProduct(productName: String, prodId: Int, imageUri: Uri) {
+        Upload().productWithImage(productName, prodId, imageUri,
             onSuccess = {
                 progressDialog.dismiss()
                 Toast.makeText(applicationContext, getString(R.string.app_product_update),

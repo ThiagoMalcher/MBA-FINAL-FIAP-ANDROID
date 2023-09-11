@@ -1,11 +1,10 @@
 package com.mba.tmalcher.fiapandroid.firebase
 
-import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.UserProfileChangeRequest
 
-class Register(private val context: Context) {
+class Register {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
@@ -33,8 +32,7 @@ class Register(private val context: Context) {
                             }
                         }
                 } else {
-                    val errorCode =
-                        (task.exception as? FirebaseAuthException)?.errorCode ?: "unknown"
+                    (task.exception as? FirebaseAuthException)?.errorCode ?: "unknown"
                     onComplete(false)
                 }
             }

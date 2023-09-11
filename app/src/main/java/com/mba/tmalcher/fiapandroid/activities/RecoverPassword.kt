@@ -8,7 +8,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
 import com.mba.tmalcher.fiapandroid.MainActivity
 import com.mba.tmalcher.fiapandroid.R
 import com.mba.tmalcher.fiapandroid.firebase.Login
@@ -18,7 +17,6 @@ class RecoverPassword : AppCompatActivity() {
 
     private lateinit var mBtnSendEmail: Button
     private lateinit var mInputEmail: TextView
-    val auth = FirebaseAuth.getInstance()
     private val mFirebaseuser = Login()
 
     override fun onCreate(savedInstanceState: Bundle?) {
