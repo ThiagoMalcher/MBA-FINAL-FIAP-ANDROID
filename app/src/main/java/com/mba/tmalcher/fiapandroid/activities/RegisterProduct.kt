@@ -6,8 +6,6 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -28,7 +26,6 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class RegisterProduct : AppCompatActivity(){
 
@@ -172,7 +169,7 @@ class RegisterProduct : AppCompatActivity(){
     }
     private fun showProgressDialog() {
         progressDialog = ProgressDialog(this)
-        progressDialog.setMessage("Salvando...")
+        progressDialog.setMessage(getString(R.string.app_product_saving))
         progressDialog.setCancelable(false)
         progressDialog.show()
     }
