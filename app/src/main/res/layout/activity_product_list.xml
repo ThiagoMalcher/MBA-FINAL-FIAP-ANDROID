@@ -20,4 +20,5 @@
         android:src="@android:drawable/ic_input_add"
         android:contentDescription="@string/msg_products_add"
         android:layout_margin="16dp" />
+
 </LinearLayout>

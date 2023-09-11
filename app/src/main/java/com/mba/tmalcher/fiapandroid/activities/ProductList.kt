@@ -12,7 +12,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.mba.tmalcher.fiapandroid.MainActivity
 import com.mba.tmalcher.fiapandroid.R
 import com.mba.tmalcher.fiapandroid.adapter.Products
+import com.mba.tmalcher.fiapandroid.firebase.Delete
 import com.mba.tmalcher.fiapandroid.model.Product
+import java.io.Serializable
 
 class ProductList : AppCompatActivity(), Products.ProductListener {
 
@@ -20,13 +22,18 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
     private lateinit var productAdapter: Products
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
+    private var position: Serializable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_list)
 
+
+
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
         productAdapter = Products(products, this)
+
+
         recyclerView.adapter = productAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         getProductsAndSetList()
@@ -35,6 +42,7 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
             val intent = Intent(this, RegisterProduct::class.java)
             startActivity(intent)
         }
+
     }
 
     override fun onRemoveProductClick(product: Product) {
@@ -43,6 +51,12 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
             products.removeAt(position)
             productAdapter.notifyItemRemoved(position)
         }
+    }
+
+    override fun onEditProductClick(name:String) {
+        val intent = Intent(this, RegisterProduct::class.java)
+        intent.putExtra("product", name)
+        startActivity(intent)
     }
 
     private fun getProductsAndSetList() {

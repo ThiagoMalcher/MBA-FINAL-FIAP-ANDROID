@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -18,11 +19,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import com.google.firebase.auth.FirebaseAuth
 import com.mba.tmalcher.fiapandroid.R
 import com.mba.tmalcher.fiapandroid.firebase.Upload
 import com.mba.tmalcher.fiapandroid.model.Product
 import java.io.File
 import java.io.IOException
+import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -40,10 +43,18 @@ class RegisterProduct : AppCompatActivity(){
     private val products = mutableListOf<Product>()
     private lateinit var progressDialog: ProgressDialog
     private var isDefaultChanged = false
+    private  var productName: Serializable? = null
+    val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_product)
+
+
+        val intent = intent
+        if (intent != null) {
+            productName = intent.getSerializableExtra("product")
+        }
 
         mProductName = findViewById(R.id.inputProductName)
         mSaveProduct = findViewById(R.id.buttonSave)
@@ -72,12 +83,32 @@ class RegisterProduct : AppCompatActivity(){
         }
 
         mSaveProduct.setOnClickListener {
-            if (mProductName.text.toString().isNotEmpty() && isDefaultChanged) {
+
+            if(productName != null && mProductName.text.toString().isNotEmpty() && isDefaultChanged) {
+                showProgressDialog()
+                Upload().updateProduct(
+                    productName.toString(),
+                    mProductName.text.toString(),
+                    imageUri,
+                    onSuccess = {
+                        progressDialog.dismiss()
+                        Toast.makeText(applicationContext, getString(R.string.app_product_update),
+                            Toast.LENGTH_SHORT).show()
+                        goToProductList()
+                    },
+                    onFailure = {
+                        Toast.makeText(applicationContext, getString(R.string.app_product_update_error),
+                            Toast.LENGTH_SHORT).show()
+                        progressDialog.dismiss()
+                })
+            }
+
+            if (productName == null && mProductName.text.toString().isNotEmpty() && isDefaultChanged) {
                 showProgressDialog()
                 mProductName.text.toString()
                 val newProductId = products.size + 1
                 registerProduct(mProductName.text.toString(), newProductId, imageUri)
-            } else {
+            } else if(productName == null && mProductName.text.toString().isEmpty() && !isDefaultChanged) {
                 Toast.makeText(
                     applicationContext, getString(R.string.msg_fields),
                     Toast.LENGTH_SHORT
@@ -165,6 +196,7 @@ class RegisterProduct : AppCompatActivity(){
     }
     private fun goToProductList() {
         val intent = Intent(this, ProductList::class.java)
+        intent.putExtra("product", productName)
         startActivity(intent)
         finish()
     }
