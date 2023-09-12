@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -12,33 +13,25 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mba.tmalcher.fiapandroid.MainActivity
 import com.mba.tmalcher.fiapandroid.R
-import com.mba.tmalcher.fiapandroid.adapter.Products
+import com.mba.tmalcher.fiapandroid.adapter.ProductAdapter
 import com.mba.tmalcher.fiapandroid.model.Product
-import java.io.Serializable
-
-class ProductList : AppCompatActivity(), Products.ProductListener {
-
-    companion object {
-        private const val EDIT_PRODUCT_REQUEST = 1
-    }
+import com.mba.tmalcher.fiapandroid.utils.SwipeToDeleteUpdateCallback
+class ProductList : AppCompatActivity() {
 
     private val products = mutableListOf<Product>()
-    private lateinit var productAdapter: Products
+    private lateinit var productAdapter: ProductAdapter
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
-    private var position: Serializable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_list)
 
+        productAdapter = ProductAdapter(this, products)
+
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
-        productAdapter = Products(products, this)
-
-
         recyclerView.adapter = productAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
-        getProductsAndSetList()
 
         val addButton: FloatingActionButton = findViewById(R.id.addButton)
         addButton.setOnClickListener {
@@ -46,23 +39,14 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
             startActivity(intent)
         }
 
+        val swipeCallback = SwipeToDeleteUpdateCallback(productAdapter)
+        val itemTouchHelper = ItemTouchHelper(swipeCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+
+        initProducts()
     }
 
-    override fun onRemoveProductClick(product: Product) {
-        val position = products.indexOf(product)
-        if (position != -1) {
-            products.removeAt(position)
-            productAdapter.notifyItemRemoved(position)
-        }
-    }
-
-    override fun onEditProductClick(name: String, index: Int) {
-        val intent = Intent(this, EditProduct::class.java)
-        intent.putExtra("productName", name)
-        startActivityForResult(intent, EDIT_PRODUCT_REQUEST)
-    }
-
-    private fun getProductsAndSetList() {
+    private fun initProducts() {
         val userId = auth.currentUser?.uid ?: return
 
         val handler = Handler()
@@ -112,16 +96,4 @@ class ProductList : AppCompatActivity(), Products.ProductListener {
     override fun onBackPressed() {
         showLogoutConfirmationDialog()
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == EDIT_PRODUCT_REQUEST && resultCode == RESULT_OK) {
-            products.clear()
-            productAdapter.notifyDataSetChanged()
-            getProductsAndSetList()
-        }
-    }
-
-
 }

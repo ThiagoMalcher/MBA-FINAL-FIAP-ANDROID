@@ -6,6 +6,13 @@
     android:padding="@dimen/default_padding_8">
 
     <ImageView
+        android:id="@+id/updateIcon"
+        android:layout_width="@dimen/default_margin_64"
+        android:layout_height="@dimen/default_margin_64"
+        android:src="@android:drawable/ic_menu_edit"
+        android:visibility="gone" />
+
+    <ImageView
         android:id="@+id/productImageView"
         android:layout_width="@dimen/default_margin_64"
         android:layout_height="@dimen/default_margin_64"
@@ -22,16 +29,10 @@
         android:textSize="@dimen/default_size_16" />
 
     <ImageView
-        android:id="@+id/removeButton"
+        android:id="@+id/deleteIcon"
         android:layout_width="@dimen/default_margin_64"
         android:layout_height="@dimen/default_margin_64"
         android:src="@android:drawable/ic_menu_delete"
-        android:background="@drawable/circle_background" />
+        android:visibility="gone" />
 
-    <ImageView
-        android:id="@+id/editButton"
-        android:layout_width="@dimen/default_margin_64"
-        android:layout_height="@dimen/default_margin_64"
-        android:src="@android:drawable/ic_menu_edit"
-        android:background="@drawable/circle_background" />
 </LinearLayout>

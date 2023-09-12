@@ -143,8 +143,6 @@ class EditProduct : AppCompatActivity() {
                             }
                         }
                     })
-
-                //imageUri = Uri.parse(product.imageUrl)
             } else {
                 Toast.makeText(
                     applicationContext, getString(R.string.app_product_load_error),
@@ -216,7 +214,8 @@ class EditProduct : AppCompatActivity() {
     }
     private fun goToProductList() {
         val intent = Intent(this, ProductList::class.java)
-        setResult(RESULT_OK, intent)
+        //setResult(RESULT_OK, intent)
+        startActivity(intent)
         finish()
     }
     private fun showProgressDialog() {
