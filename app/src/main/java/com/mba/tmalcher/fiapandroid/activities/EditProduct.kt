@@ -209,14 +209,17 @@ class EditProduct : AppCompatActivity() {
             finish()
         }, delayInMilliseconds)
     }
+
     private fun showProgressDialog() {
         progressDialog = ProgressDialog(this)
         progressDialog.setMessage(getString(R.string.app_product_saving))
         progressDialog.setCancelable(false)
         progressDialog.show()
     }
+
     override fun onBackPressed() {
-        super.onBackPressed()
+        val intent = Intent(this, ProductList::class.java)
+        startActivity(intent)
         finish()
     }
 }
