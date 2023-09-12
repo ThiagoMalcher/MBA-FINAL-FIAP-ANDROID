@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
 import com.mba.tmalcher.fiapandroid.MainActivity
@@ -17,7 +18,6 @@ class RecoverPassword : AppCompatActivity() {
 
     private lateinit var mBtnSendEmail: Button
     private lateinit var mInputEmail: TextView
-    private val mFirebaseuser = Authentication()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +46,8 @@ class RecoverPassword : AppCompatActivity() {
             return
         }
 
-        mFirebaseuser.changePassword(email) {
-            Toast.makeText(applicationContext, getString(R.string.msg_email_sent), LENGTH_SHORT).show()
+        Authentication().changePassword(email) {
+            Toast.makeText(applicationContext, getString(R.string.msg_email_sent), LENGTH_LONG).show()
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

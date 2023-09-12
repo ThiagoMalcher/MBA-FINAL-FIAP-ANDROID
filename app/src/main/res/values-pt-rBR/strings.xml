@@ -9,11 +9,11 @@
     <string name="btn_register">Register</string>
     <string name="app_forgot">Esqueceu a senha?</string>
     <string name="app_new_account">Registre-se</string>
-    <string name="msg_firebase">Erro ao registrar o perfil do usuário.</string>
-    <string name="msg_firebase_register_successfully">Usuário registrado com sucesso.</string>
-    <string name="msg_firebase_register_failure">Falha ao cadastrar o usuário.</string>
-    <string name="msg_fields">Preencha todos os campos.</string>
-    <string name="msg_fields_email">E-mail ou senha não são validos.</string>
+    <string name="msg_firebase">Erro ao registrar o perfil do usuário</string>
+    <string name="msg_firebase_register_successfully">Usuário registrado com sucesso</string>
+    <string name="msg_firebase_register_failure">Falha ao cadastrar o usuário</string>
+    <string name="msg_fields">Preencha todos os campos</string>
+    <string name="msg_fields_email">E-mail ou senha não são validos</string>
     <string name="msg_products_add">Adicionar produto</string>
     <string name="msg_login_failure">Erro ao fazer login</string>
     <string name="app_product_name">Produto</string>

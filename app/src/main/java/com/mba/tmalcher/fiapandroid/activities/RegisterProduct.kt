@@ -3,29 +3,24 @@ package com.mba.tmalcher.fiapandroid.activities
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.ContentResolver
-import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import com.google.firebase.auth.FirebaseAuth
 import com.mba.tmalcher.fiapandroid.R
 import com.mba.tmalcher.fiapandroid.firebase.Upload
-import com.mba.tmalcher.fiapandroid.model.Product
+import com.mba.tmalcher.fiapandroid.utils.InputHelper
 import java.io.File
 import java.io.IOException
-import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -40,10 +35,8 @@ class RegisterProduct : AppCompatActivity(){
     private val REQUEST_IMAGE_GALLERY = 0
     private val REQUEST_IMAGE = 1
     private lateinit var currentPhotoPath: String
-    private val products = mutableListOf<Product>()
     private lateinit var progressDialog: ProgressDialog
     private var isDefaultChanged = false
-    val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,15 +50,7 @@ class RegisterProduct : AppCompatActivity(){
 
         mImageView.setImageResource(R.drawable.product)
 
-        mProductName.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(mProductName.windowToken, 0)
-                true
-            } else {
-                false
-            }
-        }
+        InputHelper(this).closeKeyboardOnDone(mProductName)
 
         mSelectPhoto.setOnClickListener {
             openGallery()
@@ -76,16 +61,29 @@ class RegisterProduct : AppCompatActivity(){
         }
 
         mSaveProduct.setOnClickListener {
-            if (mProductName.text.toString().isNotEmpty() && isDefaultChanged) {
-                showProgressDialog()
-                registerProduct(mProductName.text.toString(), imageUri)
-            } else {
-                Toast.makeText(
-                    applicationContext, getString(R.string.msg_fields),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            save()
         }
+    }
+
+    private fun save() {
+        if (mProductName.text.toString().isEmpty() || !isDefaultChanged) {
+            Toast.makeText(applicationContext, getString(R.string.msg_fields), LENGTH_SHORT).show()
+            return
+        }
+
+        showProgressDialog()
+
+        Upload().productWithImage(mProductName.text.toString(), imageUri,
+            onSuccess = {
+                progressDialog.dismiss()
+                Toast.makeText(applicationContext, getString(R.string.app_product_update), LENGTH_SHORT).show()
+                goToProductList()
+            },
+            onFailure = {
+                Toast.makeText(applicationContext, getString(R.string.app_product_update_error), LENGTH_SHORT).show()
+                progressDialog.dismiss()
+            }
+        )
     }
 
     private fun openGallery() {
@@ -113,20 +111,6 @@ class RegisterProduct : AppCompatActivity(){
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE)
             }
         }
-    }
-
-    private fun registerProduct(productName: String, imageUri: Uri) {
-        Upload().productWithImage(productName, imageUri,
-            onSuccess = {
-                progressDialog.dismiss()
-                Toast.makeText(applicationContext, getString(R.string.app_product_update), Toast.LENGTH_SHORT).show()
-                goToProductList()
-            },
-            onFailure = {
-                Toast.makeText(applicationContext, getString(R.string.app_product_update_error), Toast.LENGTH_SHORT).show()
-                progressDialog.dismiss()
-            }
-        )
     }
 
     private fun createImageFile(): File {

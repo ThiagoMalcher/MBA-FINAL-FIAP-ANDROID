@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mPassword: TextView
     private lateinit var mRegisterAccount: TextView
     private lateinit var mBtnLogin: Button
-    private lateinit var mTextForgotPassw: TextView
+    private lateinit var mTextForgotPassword: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         mPassword = findViewById(R.id.inputPassword)
         mRegisterAccount = findViewById(R.id.textCreateNewAccount)
         mBtnLogin = findViewById(R.id.btnLogin)
-        mTextForgotPassw = findViewById(R.id.textForgotPassw)
+        mTextForgotPassword = findViewById(R.id.textForgotPassw)
 
         if(Authentication().isLogged()) {
             navigateToProductList()
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         InputHelper(this).setNextOnDone(actual = mInputUser, next = mPassword)
         InputHelper(this).closeKeyboardOnDone(mPassword)
 
-        mTextForgotPassw.setOnClickListener {
+        mTextForgotPassword.setOnClickListener {
             val intent = Intent(this, RecoverPassword::class.java)
             startActivity(intent)
         }

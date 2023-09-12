@@ -2,7 +2,6 @@ package com.mba.tmalcher.fiapandroid.activities
 
 import android.app.ProgressDialog
 import android.content.ContentResolver
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat.JPEG
@@ -14,8 +13,6 @@ import android.os.Environment
 import android.os.Environment.DIRECTORY_PICTURES
 import android.os.Handler
 import android.provider.MediaStore
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -31,6 +28,7 @@ import com.mba.tmalcher.fiapandroid.R
 import com.mba.tmalcher.fiapandroid.firebase.Delete
 import com.mba.tmalcher.fiapandroid.firebase.Read
 import com.mba.tmalcher.fiapandroid.firebase.Upload
+import com.mba.tmalcher.fiapandroid.utils.InputHelper
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -65,15 +63,7 @@ class EditProduct : AppCompatActivity() {
 
         mImageView.setImageResource(R.drawable.product)
 
-        mProductName.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(mProductName.windowToken, 0)
-                true
-            } else {
-                false
-            }
-        }
+        InputHelper(this).closeKeyboardOnDone(mProductName)
 
         mSelectPhoto.setOnClickListener {
             openGallery()
@@ -84,26 +74,13 @@ class EditProduct : AppCompatActivity() {
         }
 
         mSaveProduct.setOnClickListener {
-            if (mProductName.text.toString().isNotEmpty()) {
-                showProgressDialog()
-                Upload().productWithImage(mProductName.text.toString(), imageUri,
-                    onSuccess = {
-                        Toast.makeText(applicationContext, getString(R.string.app_product_update), LENGTH_SHORT).show()
-                        Delete().product(productName.toString())
-                        goToProductList()
-                    },
-                    onFailure = {
-                        Toast.makeText(applicationContext, getString(R.string.app_product_update_error), LENGTH_SHORT).show()
-                        progressDialog.dismiss()
-                    })
-            } else {
-                Toast.makeText(
-                    applicationContext, getString(R.string.msg_fields),
-                    LENGTH_SHORT
-                ).show()
-            }
+            update()
         }
 
+        initEditInfos()
+    }
+
+    private fun initEditInfos() {
         Read().retrieveProductBy(productName.toString()) { product ->
             if (product != null) {
                 mProductName.text = product.name
@@ -116,13 +93,11 @@ class EditProduct : AppCompatActivity() {
                 Glide.with(this)
                     .asBitmap()
                     .load(product.imageUrl)
-                    .into(object: CustomTarget<Bitmap>() {
-                        override fun onLoadCleared(placeholder: Drawable?) { }
+                    .into(object : CustomTarget<Bitmap>() {
+                        override fun onLoadCleared(placeholder: Drawable?) {}
 
                         override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                            val fileName = "${product.name}.jpg"
-
-                            val file = File(getExternalFilesDir(DIRECTORY_PICTURES), fileName)
+                            val file = File(getExternalFilesDir(DIRECTORY_PICTURES), "${product.name}.jpg")
 
                             try {
                                 val outputStream = FileOutputStream(file)
@@ -138,13 +113,30 @@ class EditProduct : AppCompatActivity() {
                         }
                     })
             } else {
-                Toast.makeText(
-                    applicationContext, getString(R.string.app_product_load_error),
-                    LENGTH_SHORT
-                ).show()
+                Toast.makeText(applicationContext, getString(R.string.app_product_load_error), LENGTH_SHORT).show()
                 goToProductList()
             }
         }
+    }
+
+    private fun update() {
+        if (mProductName.text.toString().isEmpty()) {
+            Toast.makeText(applicationContext, getString(R.string.msg_fields), LENGTH_SHORT).show()
+            return
+        }
+
+        showProgressDialog()
+
+        Upload().productWithImage(mProductName.text.toString(), imageUri,
+            onSuccess = {
+                Toast.makeText(applicationContext, getString(R.string.app_product_update), LENGTH_SHORT).show()
+                Delete().product(productName.toString())
+                goToProductList()
+            },
+            onFailure = {
+                Toast.makeText(applicationContext, getString(R.string.app_product_update_error), LENGTH_SHORT).show()
+                progressDialog.dismiss()
+            })
     }
 
     private fun openGallery() {
@@ -208,14 +200,14 @@ class EditProduct : AppCompatActivity() {
     }
     private fun goToProductList() {
         val handler = Handler()
-        val delay = 5000L // 5000 milissegundos = 5 segundos
+        val delayInMilliseconds = 2000L
 
         handler.postDelayed({
             progressDialog.dismiss()
             val intent = Intent(this, ProductList::class.java)
             startActivity(intent)
             finish()
-        }, delay)
+        }, delayInMilliseconds)
     }
     private fun showProgressDialog() {
         progressDialog = ProgressDialog(this)

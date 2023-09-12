@@ -41,7 +41,7 @@ class ProductAdapter(private val context: Context, private val products: Mutable
     }
 
     fun getProductBy(index: Int): Product {
-        return products[index];
+        return products[index]
     }
 
     fun removeProductBy(index: Int) {

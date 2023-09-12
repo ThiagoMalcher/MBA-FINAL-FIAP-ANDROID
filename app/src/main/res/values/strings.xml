@@ -8,10 +8,10 @@
     <string name="btn_register">Register</string>
     <string name="app_forgot">Forgot Password?</string>
     <string name="app_new_account">Create a new account</string>
-    <string name="msg_firebase">Error updating user profile.</string>
-    <string name="msg_firebase_register_successfully">Successfully registered user.</string>
-    <string name="msg_firebase_register_failure">Failed to register the user.</string>
-    <string name="msg_fields">Fill in all fields.</string>
+    <string name="msg_firebase">Error updating user profile</string>
+    <string name="msg_firebase_register_successfully">Successfully registered user</string>
+    <string name="msg_firebase_register_failure">Failed to register the user</string>
+    <string name="msg_fields">Fill all fields</string>
     <string name="msg_fields_email">E-mail or password are not valid.</string>
     <string name="msg_products_add">Add Product</string>
     <string name="msg_login_failure">Error when logging in</string>

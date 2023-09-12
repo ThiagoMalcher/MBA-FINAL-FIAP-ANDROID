@@ -7,6 +7,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 
 class InputHelper(private val context: Context) {
+
     fun setNextOnDone(actual: TextView, next: TextView) {
         actual.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == IME_ACTION_DONE) {
