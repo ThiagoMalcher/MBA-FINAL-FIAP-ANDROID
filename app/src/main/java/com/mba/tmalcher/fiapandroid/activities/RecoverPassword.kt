@@ -23,7 +23,7 @@ class RecoverPassword : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recover_password)
 
-        mBtnSendEmail =  findViewById(R.id.btnSendEmail)
+        mBtnSendEmail = findViewById(R.id.btnSendEmail)
         mInputEmail = findViewById(R.id.inputUserEmail)
 
         InputHelper(this).closeKeyboardOnDone(mInputEmail)
@@ -36,18 +36,23 @@ class RecoverPassword : AppCompatActivity() {
     private fun recover() {
         val email = mInputEmail.text.toString()
 
-        if(email.isEmpty()) {
+        if (email.isEmpty()) {
             Toast.makeText(applicationContext, getString(R.string.msg_fields), LENGTH_SHORT).show()
             return
         }
 
         if (!Validators().isEmailValid(email)) {
-            Toast.makeText(applicationContext, getString(R.string.msg_fields_email_invalid), LENGTH_SHORT).show()
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.msg_fields_email_invalid),
+                LENGTH_SHORT
+            ).show()
             return
         }
 
         Authentication().changePassword(email) {
-            Toast.makeText(applicationContext, getString(R.string.msg_email_sent), LENGTH_LONG).show()
+            Toast.makeText(applicationContext, getString(R.string.msg_email_sent), LENGTH_LONG)
+                .show()
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

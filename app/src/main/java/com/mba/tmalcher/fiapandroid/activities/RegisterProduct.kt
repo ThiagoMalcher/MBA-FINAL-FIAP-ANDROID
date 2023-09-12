@@ -24,7 +24,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RegisterProduct : AppCompatActivity(){
+class RegisterProduct : AppCompatActivity() {
 
     private lateinit var mProductName: TextView
     private lateinit var mSaveProduct: Button
@@ -76,11 +76,19 @@ class RegisterProduct : AppCompatActivity(){
         Upload().productWithImage(mProductName.text.toString(), imageUri,
             onSuccess = {
                 progressDialog.dismiss()
-                Toast.makeText(applicationContext, getString(R.string.app_product_update), LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.app_product_update),
+                    LENGTH_SHORT
+                ).show()
                 goToProductList()
             },
             onFailure = {
-                Toast.makeText(applicationContext, getString(R.string.app_product_update_error), LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.app_product_update_error),
+                    LENGTH_SHORT
+                ).show()
                 progressDialog.dismiss()
             }
         )
@@ -115,7 +123,8 @@ class RegisterProduct : AppCompatActivity(){
 
     private fun createImageFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        val storageDir: File =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         val imageFileName = "JPEG_${timeStamp}_"
         val image = File.createTempFile(imageFileName, ".jpg", storageDir)
         currentPhotoPath = image.absolutePath
@@ -147,6 +156,7 @@ class RegisterProduct : AppCompatActivity(){
 
         }
     }
+
     private fun goToProductList() {
         val intent = Intent(this, ProductList::class.java)
         startActivity(intent)
@@ -159,6 +169,7 @@ class RegisterProduct : AppCompatActivity(){
         progressDialog.setCancelable(false)
         progressDialog.show()
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
         finish()

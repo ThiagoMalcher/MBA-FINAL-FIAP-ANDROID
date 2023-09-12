@@ -22,25 +22,20 @@
         android:id="@+id/buttonChoosePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin_16"
+        android:layout_marginTop="@dimen/default_margin_24"
         android:layout_marginEnd="@dimen/default_margin_8"
-        android:layout_marginBottom="@dimen/default_margin_16"
         android:text="@string/app_product_add"
-        app:layout_constraintBottom_toTopOf="@+id/txtProductName"
         app:layout_constraintEnd_toStartOf="@+id/buttonTakePhoto"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
 
     <Button
         android:id="@+id/buttonTakePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin_8"
-        android:layout_marginTop="@dimen/default_margin_16"
-        android:layout_marginBottom="@dimen/default_margin_16"
+        android:layout_marginTop="@dimen/default_margin_24"
         android:text="@string/app_product_add_camera"
-        app:layout_constraintBottom_toTopOf="@+id/txtProductName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonChoosePhoto"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -51,23 +46,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin_24"
+        android:layout_marginTop="@dimen/default_margin_24"
         android:layout_marginEnd="@dimen/default_margin_24"
-        android:layout_marginBottom="@dimen/default_margin_32"
         android:hint="@string/app_product_add_name"
         android:textColorHint="@color/color_grey"
         app:boxStrokeColor="@color/color_grey"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSave"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonChoosePhoto">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputProductName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:textColor="@color/color_grey"
             android:textSize="@dimen/default_size_16"
             android:textStyle="bold"
-            android:inputType="text"
             tools:ignore="TouchTargetSizeCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,11 +71,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin_32"
+        android:layout_marginTop="@dimen/default_margin_52"
         android:layout_marginEnd="@dimen/default_margin_32"
         android:layout_marginBottom="@dimen/margin_128"
         android:text="@string/app_product_add_save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtProductName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

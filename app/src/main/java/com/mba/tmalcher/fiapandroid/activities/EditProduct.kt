@@ -96,8 +96,12 @@ class EditProduct : AppCompatActivity() {
                     .into(object : CustomTarget<Bitmap>() {
                         override fun onLoadCleared(placeholder: Drawable?) {}
 
-                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                            val file = File(getExternalFilesDir(DIRECTORY_PICTURES), "${product.name}.jpg")
+                        override fun onResourceReady(
+                            resource: Bitmap,
+                            transition: Transition<in Bitmap>?
+                        ) {
+                            val file =
+                                File(getExternalFilesDir(DIRECTORY_PICTURES), "${product.name}.jpg")
 
                             try {
                                 val outputStream = FileOutputStream(file)
@@ -113,7 +117,11 @@ class EditProduct : AppCompatActivity() {
                         }
                     })
             } else {
-                Toast.makeText(applicationContext, getString(R.string.app_product_load_error), LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.app_product_load_error),
+                    LENGTH_SHORT
+                ).show()
                 goToProductList()
             }
         }
@@ -129,12 +137,20 @@ class EditProduct : AppCompatActivity() {
 
         Upload().productWithImage(mProductName.text.toString(), imageUri,
             onSuccess = {
-                Toast.makeText(applicationContext, getString(R.string.app_product_update), LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.app_product_update),
+                    LENGTH_SHORT
+                ).show()
                 Delete().product(productName.toString())
                 goToProductList()
             },
             onFailure = {
-                Toast.makeText(applicationContext, getString(R.string.app_product_update_error), LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.app_product_update_error),
+                    LENGTH_SHORT
+                ).show()
                 progressDialog.dismiss()
             })
     }
@@ -198,6 +214,7 @@ class EditProduct : AppCompatActivity() {
 
         }
     }
+
     private fun goToProductList() {
         val handler = Handler()
         val delayInMilliseconds = 2000L

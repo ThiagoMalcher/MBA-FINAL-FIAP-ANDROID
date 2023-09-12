@@ -43,24 +43,33 @@ class RegisterUser : AppCompatActivity() {
         val txtPassword = mPassword.text.toString()
         val txtUserName = mUserName.text.toString()
 
-        if(txtUserName.isEmpty() || txtPassword.isEmpty() || txtEmail.isEmpty()) {
+        if (txtUserName.isEmpty() || txtPassword.isEmpty() || txtEmail.isEmpty()) {
             Toast.makeText(applicationContext, getString(R.string.msg_fields), LENGTH_SHORT).show()
             return
         }
 
-        if(!Validators().isEmailValid(txtEmail) || !Validators().isPasswordValid(txtPassword)) {
-            Toast.makeText(applicationContext, getString(R.string.msg_fields_email), LENGTH_SHORT).show()
+        if (!Validators().isEmailValid(txtEmail) || !Validators().isPasswordValid(txtPassword)) {
+            Toast.makeText(applicationContext, getString(R.string.msg_fields_email), LENGTH_SHORT)
+                .show()
             return
         }
 
         Authentication().signUpWith(txtEmail, txtPassword, txtUserName) { wasSuccess ->
-            when(wasSuccess) {
+            when (wasSuccess) {
                 true -> {
-                    Toast.makeText(applicationContext, getString(R.string.msg_firebase_register_successfully), LENGTH_SHORT).show()
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.msg_firebase_register_successfully),
+                        LENGTH_SHORT
+                    ).show()
                     navigateToMain()
                 }
                 false -> {
-                    Toast.makeText(applicationContext, getString(R.string.msg_firebase_register_failure), LENGTH_SHORT).show()
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.msg_firebase_register_failure),
+                        LENGTH_SHORT
+                    ).show()
                     clearForm()
                 }
             }
