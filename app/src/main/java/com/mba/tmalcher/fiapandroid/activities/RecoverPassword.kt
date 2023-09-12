@@ -10,14 +10,14 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.mba.tmalcher.fiapandroid.MainActivity
 import com.mba.tmalcher.fiapandroid.R
-import com.mba.tmalcher.fiapandroid.firebase.Login
-import com.mba.tmalcher.fiapandroid.utils.Helpers
+import com.mba.tmalcher.fiapandroid.firebase.Authentication
+import com.mba.tmalcher.fiapandroid.utils.Validators
 
 class RecoverPassword : AppCompatActivity() {
 
     private lateinit var mBtnSendEmail: Button
     private lateinit var mInputEmail: TextView
-    private val mFirebaseuser = Login()
+    private val mFirebaseuser = Authentication()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +39,8 @@ class RecoverPassword : AppCompatActivity() {
         mBtnSendEmail.setOnClickListener {
             val email = mInputEmail.text.toString()
             if (email.isNotEmpty()) {
-                if (Helpers(applicationContext).isValidEmail(email)) {
-                    mFirebaseuser.recoverLogin(email) { _ ->
+                if (Validators().isEmailValid(email)) {
+                    mFirebaseuser.changePassword(email) { _ ->
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         finish()

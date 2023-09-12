@@ -20,13 +20,12 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.DiskCacheStrategy.ALL
 import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.mba.tmalcher.fiapandroid.R
 import com.mba.tmalcher.fiapandroid.firebase.Delete
@@ -35,7 +34,6 @@ import com.mba.tmalcher.fiapandroid.firebase.Upload
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -90,20 +88,18 @@ class EditProduct : AppCompatActivity() {
                 showProgressDialog()
                 Upload().productWithImage(mProductName.text.toString(), imageUri,
                     onSuccess = {
-                        Toast.makeText(applicationContext, getString(R.string.app_product_update),
-                            Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, getString(R.string.app_product_update), LENGTH_SHORT).show()
                         Delete().product(productName.toString())
                         goToProductList()
                     },
-                    onFailure = { _ ->
-                        Toast.makeText(applicationContext, getString(R.string.app_product_update_error),
-                            Toast.LENGTH_SHORT).show()
+                    onFailure = {
+                        Toast.makeText(applicationContext, getString(R.string.app_product_update_error), LENGTH_SHORT).show()
                         progressDialog.dismiss()
                     })
             } else {
                 Toast.makeText(
                     applicationContext, getString(R.string.msg_fields),
-                    Toast.LENGTH_SHORT
+                    LENGTH_SHORT
                 ).show()
             }
         }
@@ -144,7 +140,7 @@ class EditProduct : AppCompatActivity() {
             } else {
                 Toast.makeText(
                     applicationContext, getString(R.string.app_product_load_error),
-                    Toast.LENGTH_SHORT
+                    LENGTH_SHORT
                 ).show()
                 goToProductList()
             }

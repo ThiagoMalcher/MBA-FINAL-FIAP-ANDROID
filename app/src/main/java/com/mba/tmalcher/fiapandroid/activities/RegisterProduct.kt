@@ -119,13 +119,11 @@ class RegisterProduct : AppCompatActivity(){
         Upload().productWithImage(productName, imageUri,
             onSuccess = {
                 progressDialog.dismiss()
-                Toast.makeText(applicationContext, getString(R.string.app_product_update),
-                    Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, getString(R.string.app_product_update), Toast.LENGTH_SHORT).show()
                 goToProductList()
             },
-            onFailure = { _ ->
-                Toast.makeText(applicationContext, getString(R.string.app_product_update_error),
-                    Toast.LENGTH_SHORT).show()
+            onFailure = {
+                Toast.makeText(applicationContext, getString(R.string.app_product_update_error), Toast.LENGTH_SHORT).show()
                 progressDialog.dismiss()
             }
         )

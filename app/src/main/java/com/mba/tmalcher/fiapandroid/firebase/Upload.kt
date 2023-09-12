@@ -12,13 +12,13 @@ class Upload {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
 
-    fun productWithImage(name: String, imageUri: Uri, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
+    fun productWithImage(name: String, image: Uri, onSuccess: () -> Unit, onFailure: () -> Unit) {
         val userId = auth.currentUser?.uid ?: return
         val storageRef = storage.reference
 
         val imageName = "${name.replace(" ", "_")}_${UUID.randomUUID()}"
         val spaceRef = storageRef.child("users/$userId/images/$imageName.jpg")
-        val uploadTask = spaceRef.putFile(imageUri)
+        val uploadTask = spaceRef.putFile(image)
 
         uploadTask.addOnSuccessListener {
             spaceRef.downloadUrl.addOnSuccessListener { uri ->
@@ -39,12 +39,12 @@ class Upload {
                         onSuccess()
                     }
                     .addOnFailureListener { _ ->
-                        onFailure("Erro ao salvar o produto")
+                        onFailure()
                     }
-
             }
-        }.addOnFailureListener {
-            onFailure("Erro ao fazer upload da imagem")
+        }
+        .addOnFailureListener {
+            onFailure()
         }
     }
 }

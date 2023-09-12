@@ -12,8 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mba.tmalcher.fiapandroid.activities.ProductList
 import com.mba.tmalcher.fiapandroid.activities.RecoverPassword
 import com.mba.tmalcher.fiapandroid.activities.RegisterUser
-import com.mba.tmalcher.fiapandroid.firebase.Login
+import com.mba.tmalcher.fiapandroid.firebase.Authentication
 import com.mba.tmalcher.fiapandroid.utils.Helpers
+import com.mba.tmalcher.fiapandroid.utils.Validators
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mBtnLogin: Button
     private lateinit var mTextForgotPassw: TextView
 
-    private val mFirebaseuser = Login()
+    private val mFirebaseuser = Authentication()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         mBtnLogin = findViewById(R.id.btnLogin)
         mTextForgotPassw = findViewById(R.id.textForgotPassw)
 
-        if(mFirebaseuser.getCurrentUser() != null) {
+        if(mFirebaseuser.isLogged()) {
             goToProductList()
         }
 
@@ -73,8 +74,8 @@ class MainActivity : AppCompatActivity() {
             val email = mInputUser.text.toString()
             val password = mPassword.text.toString()
             if(email.isNotEmpty() || password.isNotEmpty()) {
-                if(Helpers(applicationContext).isValidEmail(email)) {
-                    mFirebaseuser.loginUser(email, password) { success ->
+                if(Validators().isEmailValid(email)) {
+                    mFirebaseuser.signInWith(email, password) { success ->
                         if (success) {
                             goToProductList()
                         } else {

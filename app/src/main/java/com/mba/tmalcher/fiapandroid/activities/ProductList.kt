@@ -11,7 +11,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mba.tmalcher.fiapandroid.MainActivity
 import com.mba.tmalcher.fiapandroid.R
 import com.mba.tmalcher.fiapandroid.adapter.ProductAdapter
-import com.mba.tmalcher.fiapandroid.firebase.Login
+import com.mba.tmalcher.fiapandroid.firebase.Authentication
 import com.mba.tmalcher.fiapandroid.firebase.Read
 import com.mba.tmalcher.fiapandroid.model.Product
 import com.mba.tmalcher.fiapandroid.utils.SwipeToDeleteUpdateCallback
@@ -73,7 +73,7 @@ class ProductList : AppCompatActivity() {
         }
 
         builder.setPositiveButton(getString(R.string.confirm)) { _, _ ->
-            Login().logout()
+            Authentication().logout()
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)

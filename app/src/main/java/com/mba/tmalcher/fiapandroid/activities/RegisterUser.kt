@@ -11,8 +11,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mba.tmalcher.fiapandroid.MainActivity
 import com.mba.tmalcher.fiapandroid.R
-import com.mba.tmalcher.fiapandroid.firebase.Register
-import com.mba.tmalcher.fiapandroid.utils.Helpers
+import com.mba.tmalcher.fiapandroid.firebase.Authentication
+import com.mba.tmalcher.fiapandroid.utils.Validators
 
 class RegisterUser : AppCompatActivity() {
 
@@ -67,12 +67,11 @@ class RegisterUser : AppCompatActivity() {
         val txtPassword = mPassword.text.toString()
         val txtUserName = mUserName.text.toString()
 
-        if(!txtUserName.isEmpty() || !txtPassword.isEmpty() || !txtEmail.isEmpty()) {
-            if(Helpers(applicationContext).isValidEmail(txtEmail) ||
-                Helpers(applicationContext).isPasswordValid(txtPassword)) {
+        if(txtUserName.isNotEmpty() || txtPassword.isNotEmpty() || txtEmail.isNotEmpty()) {
+            if(Validators().isEmailValid(txtEmail) ||
+                Validators().isPasswordValid(txtPassword)) {
 
-                val firebase = Register()
-                firebase.registerUser( txtEmail, txtPassword, txtUserName) { success ->
+                Authentication().signUpWith(txtEmail, txtPassword, txtUserName) { success ->
                     if (success) {
                         Toast.makeText(applicationContext, getString(R.string.msg_firebase_register_successfully),
                             Toast.LENGTH_SHORT).show()
@@ -104,9 +103,9 @@ class RegisterUser : AppCompatActivity() {
     }
 
     private fun cleanInputText() {
-        mInputEmail.setText("")
-        mPassword.setText("")
-        mUserName.setText("")
+        mInputEmail.text = ""
+        mPassword.text = ""
+        mUserName.text = ""
     }
 
     override fun onBackPressed() {

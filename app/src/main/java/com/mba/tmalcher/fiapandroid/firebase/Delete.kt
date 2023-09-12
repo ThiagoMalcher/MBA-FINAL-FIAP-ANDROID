@@ -16,7 +16,7 @@ class Delete {
 
         imageRef.delete()
             .addOnSuccessListener {
-                val query =  db.collection("users")
+                val query = db.collection("users")
                     .document(userId)
                     .collection("products")
                     .whereEqualTo("imageName", productName)
@@ -29,12 +29,8 @@ class Delete {
                                 .collection("products")
                                 .document(document.id)
                                 .delete()
-                                .addOnSuccessListener { }
-                                .addOnFailureListener { _ -> }
                         }
                     }
-                    .addOnFailureListener { _ -> }
             }
-            .addOnFailureListener { _ -> }
     }
 }

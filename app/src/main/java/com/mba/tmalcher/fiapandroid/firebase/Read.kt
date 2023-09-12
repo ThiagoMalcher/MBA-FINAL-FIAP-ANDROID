@@ -1,5 +1,6 @@
 package com.mba.tmalcher.fiapandroid.firebase
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mba.tmalcher.fiapandroid.model.Product
@@ -17,24 +18,22 @@ class Read {
 
         query.get()
             .addOnSuccessListener { querySnapshot ->
-                var product: Product? = null
+                val product: Product? = querySnapshot
+                    .firstOrNull()
+                    ?.let { document ->
+                        val itemData = document.data
+                        val id = document.id
+                        val name = itemData["name"] as String
+                        val imageUrl = itemData["imageUrl"] as String
+                        val imageName = itemData["imageName"] as String
 
-                for (document in querySnapshot) {
-                    val id = document.id
-                    val name = document.getString("name")
-                    val imageUrl = document.getString("imageUrl")
-                    val imageName = document.getString("imageName")
-
-                    println("$id - $name - $imageUrl - $imageName")
-                    if (name != null && imageUrl != null && imageName != null) {
-                        product = Product(id, name, imageUrl, imageName)
-                        break
+                        Product(id, name, imageUrl, imageName)
                     }
-                }
 
                 onProductRetrieved(product)
             }
-            .addOnFailureListener { _ ->
+            .addOnFailureListener { exception ->
+                Log.e("retrieveProductBy","Erro ao recuperar produto: ${exception.message}")
                 onProductRetrieved(null)
             }
     }
@@ -64,8 +63,8 @@ class Read {
                 onProductsRetrieved(products)
             }
             .addOnFailureListener { exception ->
-                println("Erro ao recuperar produtos: $exception")
-                onProductsRetrieved(emptyList()) // Tratar o erro conforme necessário
+                Log.e("retrieveAllProducts","Erro ao recuperar produtos: ${exception.message}")
+                onProductsRetrieved(emptyList())
             }
     }
 }
