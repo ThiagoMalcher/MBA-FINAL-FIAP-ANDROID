@@ -82,13 +82,11 @@ class MainActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT).show()
                         }
                     }
-                }
-                else {
+                } else {
                     Toast.makeText(applicationContext, getString(R.string.msg_fields_email),
                         Toast.LENGTH_SHORT).show()
                 }
-            }
-            else {
+            } else {
                 Toast.makeText(applicationContext, getString(R.string.msg_fields),
                     Toast.LENGTH_SHORT).show()
             }

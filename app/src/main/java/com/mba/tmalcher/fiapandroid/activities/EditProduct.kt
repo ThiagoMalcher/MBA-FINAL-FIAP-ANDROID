@@ -1,7 +1,5 @@
 package com.mba.tmalcher.fiapandroid.activities
 
-import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.app.ProgressDialog
 import android.content.ContentResolver
 import android.content.Context
@@ -14,6 +12,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.os.Environment.DIRECTORY_PICTURES
+import android.os.Handler
 import android.provider.MediaStore
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -91,7 +90,6 @@ class EditProduct : AppCompatActivity() {
                 showProgressDialog()
                 Upload().productWithImage(mProductName.text.toString(), imageUri,
                     onSuccess = {
-                        progressDialog.dismiss()
                         Toast.makeText(applicationContext, getString(R.string.app_product_update),
                             Toast.LENGTH_SHORT).show()
                         Delete().product(productName.toString())
@@ -213,10 +211,15 @@ class EditProduct : AppCompatActivity() {
         }
     }
     private fun goToProductList() {
-        val intent = Intent(this, ProductList::class.java)
-        //setResult(RESULT_OK, intent)
-        startActivity(intent)
-        finish()
+        val handler = Handler()
+        val delay = 5000L // 5000 milissegundos = 5 segundos
+
+        handler.postDelayed({
+            progressDialog.dismiss()
+            val intent = Intent(this, ProductList::class.java)
+            startActivity(intent)
+            finish()
+        }, delay)
     }
     private fun showProgressDialog() {
         progressDialog = ProgressDialog(this)

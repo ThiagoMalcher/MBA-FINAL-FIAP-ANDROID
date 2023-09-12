@@ -29,7 +29,7 @@
     <string name="app_recover_password">Enviar e-mail</string>
     <string name="app_recover_password_msg">Você receberá um e-mail para alterar sua senha.</string>
     <string name="logout">Logout</string>
-    <string name="lougout_message">Tem certeza de que deseja sair da aplicação?</string>
+    <string name="logout_message">Tem certeza de que deseja sair da aplicação?</string>
     <string name="cancel">Cancelar</string>
     <string name="confirm">Confirmar</string>
 </resources>

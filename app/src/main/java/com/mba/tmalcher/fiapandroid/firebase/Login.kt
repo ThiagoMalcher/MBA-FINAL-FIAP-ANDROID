@@ -34,4 +34,8 @@ class Login {
             }
     }
 
+    fun logout() {
+        auth.signOut()
+    }
+
 }
