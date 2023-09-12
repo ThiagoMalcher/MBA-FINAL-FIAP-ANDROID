@@ -41,10 +41,10 @@ class Authentication {
             }
     }
 
-    fun changePassword(email: String, callback: (Boolean) -> Unit) {
+    fun changePassword(email: String, callback: () -> Unit) {
         auth.sendPasswordResetEmail(email)
-            .addOnCompleteListener { task ->
-                callback(task.isSuccessful)
+            .addOnCompleteListener {
+                callback()
             }
     }
 

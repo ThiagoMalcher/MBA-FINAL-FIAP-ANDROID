@@ -1,6 +1,5 @@
 package com.mba.tmalcher.fiapandroid.activities
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -8,12 +7,11 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.mba.tmalcher.fiapandroid.MainActivity
 import com.mba.tmalcher.fiapandroid.R
 import com.mba.tmalcher.fiapandroid.adapter.ProductAdapter
-import com.mba.tmalcher.fiapandroid.firebase.Authentication
 import com.mba.tmalcher.fiapandroid.firebase.Read
 import com.mba.tmalcher.fiapandroid.model.Product
+import com.mba.tmalcher.fiapandroid.utils.LogoutDialog
 import com.mba.tmalcher.fiapandroid.utils.SwipeToDeleteUpdateCallback
 
 class ProductList : AppCompatActivity() {
@@ -45,7 +43,7 @@ class ProductList : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        showLogoutConfirmationDialog()
+        LogoutDialog(this).show()
     }
 
     private fun initProducts() {
@@ -61,25 +59,5 @@ class ProductList : AppCompatActivity() {
                 println("Nenhum produto encontrado para o usuário.")
             }
         }
-    }
-
-    private fun showLogoutConfirmationDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(getString(R.string.logout))
-        builder.setMessage(getString(R.string.logout_message))
-
-        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
-            dialog.dismiss()
-        }
-
-        builder.setPositiveButton(getString(R.string.confirm)) { _, _ ->
-            Authentication().logout()
-            val intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        }
-
-        val dialog = builder.create()
-        dialog.show()
     }
 }

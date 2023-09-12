@@ -32,4 +32,6 @@
     <string name="logout_message">Tem certeza de que deseja sair da aplicação?</string>
     <string name="cancel">Cancelar</string>
     <string name="confirm">Confirmar</string>
+    <string name="msg_fields_email_invalid">Email inválido</string>
+    <string name="msg_email_sent">Se o email for válido você receberá uma mensagem para recuperar sua conta</string>
 </resources>

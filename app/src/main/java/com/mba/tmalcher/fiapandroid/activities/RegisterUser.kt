@@ -1,17 +1,16 @@
 package com.mba.tmalcher.fiapandroid.activities
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
 import com.mba.tmalcher.fiapandroid.MainActivity
 import com.mba.tmalcher.fiapandroid.R
 import com.mba.tmalcher.fiapandroid.firebase.Authentication
+import com.mba.tmalcher.fiapandroid.utils.InputHelper
 import com.mba.tmalcher.fiapandroid.utils.Validators
 
 class RegisterUser : AppCompatActivity() {
@@ -30,79 +29,51 @@ class RegisterUser : AppCompatActivity() {
         mUserName = findViewById(R.id.inputtxtUsername)
         mBtnRegister = findViewById(R.id.btnRegister)
 
-        mInputEmail.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                mUserName.requestFocus()
-                return@OnEditorActionListener true
-            }
-            false
-        })
-
-        mUserName.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                mPassword.requestFocus()
-                return@OnEditorActionListener true
-            }
-            false
-        })
-
-        mPassword.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(mPassword.windowToken, 0)
-                true
-            } else {
-                false
-            }
-        }
+        InputHelper(this).setNextOnDone(actual = mInputEmail, next = mUserName)
+        InputHelper(this).setNextOnDone(actual = mUserName, next = mPassword)
+        InputHelper(this).closeKeyboardOnDone(mPassword)
 
         mBtnRegister.setOnClickListener {
-            registerUser()
+            register()
         }
     }
 
-    private fun registerUser() {
-        //local variable
+    private fun register() {
         val txtEmail = mInputEmail.text.toString()
         val txtPassword = mPassword.text.toString()
         val txtUserName = mUserName.text.toString()
 
-        if(txtUserName.isNotEmpty() || txtPassword.isNotEmpty() || txtEmail.isNotEmpty()) {
-            if(Validators().isEmailValid(txtEmail) ||
-                Validators().isPasswordValid(txtPassword)) {
+        if(txtUserName.isEmpty() || txtPassword.isEmpty() || txtEmail.isEmpty()) {
+            Toast.makeText(applicationContext, getString(R.string.msg_fields), LENGTH_SHORT).show()
+            return
+        }
 
-                Authentication().signUpWith(txtEmail, txtPassword, txtUserName) { success ->
-                    if (success) {
-                        Toast.makeText(applicationContext, getString(R.string.msg_firebase_register_successfully),
-                            Toast.LENGTH_SHORT).show()
-                        goToMain()
-                    } else {
-                        Toast.makeText(applicationContext, getString(R.string.msg_firebase_register_failure),
-                            Toast.LENGTH_SHORT).show()
-                        cleanInputText()
-                    }
+        if(!Validators().isEmailValid(txtEmail) || !Validators().isPasswordValid(txtPassword)) {
+            Toast.makeText(applicationContext, getString(R.string.msg_fields_email), LENGTH_SHORT).show()
+            return
+        }
+
+        Authentication().signUpWith(txtEmail, txtPassword, txtUserName) { wasSuccess ->
+            when(wasSuccess) {
+                true -> {
+                    Toast.makeText(applicationContext, getString(R.string.msg_firebase_register_successfully), LENGTH_SHORT).show()
+                    navigateToMain()
+                }
+                false -> {
+                    Toast.makeText(applicationContext, getString(R.string.msg_firebase_register_failure), LENGTH_SHORT).show()
+                    clearForm()
                 }
             }
-            else {
-                Toast.makeText(applicationContext, getString(R.string.msg_fields_email),
-                    Toast.LENGTH_SHORT).show()
-                cleanInputText()
-            }
-        }
-        else {
-            Toast.makeText(applicationContext, getString(R.string.msg_fields),
-                Toast.LENGTH_SHORT).show()
-            cleanInputText()
         }
     }
 
-    fun goToMain() {
+    private fun navigateToMain() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
     }
 
-    private fun cleanInputText() {
+    private fun clearForm() {
         mInputEmail.text = ""
         mPassword.text = ""
         mUserName.text = ""

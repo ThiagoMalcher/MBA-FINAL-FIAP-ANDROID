@@ -31,4 +31,6 @@
     <string name="logout_message">Are you sure you want to exit the application?</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
+    <string name="msg_fields_email_invalid">Invalid email</string>
+    <string name="msg_email_sent">If the email was valid you`ll receive an message to recover your account</string>
 </resources>
