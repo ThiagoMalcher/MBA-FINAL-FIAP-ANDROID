@@ -12,17 +12,12 @@ class Authentication {
     }
 
     fun signUpWith(
-        email: String,
-        password: String,
-        nickname: String,
-        onComplete: (Boolean) -> Unit
+        email: String, password: String, nickname: String, onComplete: (Boolean) -> Unit
     ) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val profileUpdates = UserProfileChangeRequest.Builder()
-                        .setDisplayName(nickname)
-                        .build()
+                    val profileUpdates =
+                        UserProfileChangeRequest.Builder().setDisplayName(nickname).build()
 
                     auth.currentUser?.updateProfile(profileUpdates)
                         ?.addOnCompleteListener { profileTask ->
@@ -35,15 +30,13 @@ class Authentication {
     }
 
     fun signInWith(email: String, password: String, callback: (Boolean) -> Unit) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 callback(task.isSuccessful)
             }
     }
 
     fun changePassword(email: String, callback: () -> Unit) {
-        auth.sendPasswordResetEmail(email)
-            .addOnCompleteListener {
+        auth.sendPasswordResetEmail(email).addOnCompleteListener {
                 callback()
             }
     }

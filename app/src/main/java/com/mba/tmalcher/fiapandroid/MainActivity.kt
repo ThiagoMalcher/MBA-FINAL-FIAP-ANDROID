@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         mBtnLogin = findViewById(R.id.btnLogin)
         mTextForgotPassword = findViewById(R.id.textForgotPassw)
 
-        if(Authentication().isLogged()) {
+        if (Authentication().isLogged()) {
             navigateToProductList()
         }
 
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         val email = mInputUser.text.toString()
         val password = mPassword.text.toString()
 
-        if(email.isEmpty() || password.isEmpty()) {
+        if (email.isEmpty() || password.isEmpty()) {
             makeText(applicationContext, getString(R.string.msg_fields), LENGTH_SHORT).show()
             return
         }
@@ -72,16 +72,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         Authentication().signInWith(email, password) { wasSuccess ->
-            when(wasSuccess) {
+            when (wasSuccess) {
                 true -> navigateToProductList()
-                false -> makeText(applicationContext, getString(R.string.msg_login_failure), LENGTH_SHORT).show()
+                false -> makeText(
+                    applicationContext,
+                    getString(R.string.msg_login_failure),
+                    LENGTH_SHORT
+                ).show()
             }
         }
     }
 
     private fun navigateToProductList() {
-          val intent = Intent(this, ProductList::class.java)
-          startActivity(intent)
-          finish()
+        val intent = Intent(this, ProductList::class.java)
+        startActivity(intent)
+        finish()
     }
 }

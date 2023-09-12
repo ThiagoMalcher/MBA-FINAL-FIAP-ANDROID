@@ -43,8 +43,8 @@ class Upload {
                     }
             }
         }
-        .addOnFailureListener {
-            onFailure()
-        }
+            .addOnFailureListener {
+                onFailure()
+            }
     }
 }

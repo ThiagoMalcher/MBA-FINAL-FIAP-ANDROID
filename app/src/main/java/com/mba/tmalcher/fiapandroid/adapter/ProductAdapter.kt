@@ -11,16 +11,17 @@ import com.bumptech.glide.Glide
 import com.mba.tmalcher.fiapandroid.R
 import com.mba.tmalcher.fiapandroid.model.Product
 
-class ProductAdapter(private val context: Context, private val products: MutableList<Product>)
-    : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(private val context: Context, private val products: MutableList<Product>) :
+    RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val productNameTextView: TextView = itemView.findViewById(R.id.productNameTextView)
-        val imageView:ImageView = itemView.findViewById(R.id.productImageView)
+        val imageView: ImageView = itemView.findViewById(R.id.productImageView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
         return ProductViewHolder(itemView)
     }
 

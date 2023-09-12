@@ -11,7 +11,7 @@ class Read {
 
     fun retrieveProductBy(productName: String, onProductRetrieved: (Product?) -> Unit) {
         val userId = auth.currentUser?.uid ?: return
-        val query =  db.collection("users")
+        val query = db.collection("users")
             .document(userId)
             .collection("products")
             .whereEqualTo("imageName", productName)
@@ -33,7 +33,10 @@ class Read {
                 onProductRetrieved(product)
             }
             .addOnFailureListener { exception ->
-                Log.e("retrieveProductBy","Erro ao recuperar produto: ${exception.message}")
+                Log.e(
+                    "retrieveProductBy",
+                    "Erro ao recuperar produto: ${exception.message}"
+                )
                 onProductRetrieved(null)
             }
     }
@@ -63,7 +66,10 @@ class Read {
                 onProductsRetrieved(products)
             }
             .addOnFailureListener { exception ->
-                Log.e("retrieveAllProducts","Erro ao recuperar produtos: ${exception.message}")
+                Log.e(
+                    "retrieveAllProducts",
+                    "Erro ao recuperar produtos: ${exception.message}"
+                )
                 onProductsRetrieved(emptyList())
             }
     }
